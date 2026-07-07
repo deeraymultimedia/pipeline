@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Deeray Multimedia — Pipeline</title>
+<script src="https://accounts.google.com/gsi/client" async defer></script>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  :root{
+    --bg:#f8f7f5;
+    --surface:#ffffff;
+    --surface-1:#f1f0ee;
+    --border:#e4e2dd;
+    --border-strong:#c8c5be;
+    --text:#1a1a18;
+    --text-2:#5a5955;
+    --text-3:#999790;
+    --accent:#0f6e56;
+    --accent-bg:#e1f5ee;
+    --accent-text:#085041;
+    --radius:10px;
+  }
+  @media(prefers-color-scheme:dark){
+    :root{
+      --bg:#131312;
+      --surface:#1e1e1c;
+      --surface-1:#252523;
+      --border:#2e2e2b;
+      --border-strong:#3d3d3a;
+      --text:#e8e6e0;
+      --text-2:#999790;
+      --text-3:#5a5955;
+      --accent:#1d9e75;
+      --accent-bg:#04342c;
+      --accent-text:#9fe1cb;
+    }
+  }
+  body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;font-size:14px}
+
+  /* Auth screen */
+  #auth-screen{display:flex;align-items:center;justify-content:center;min-height:100vh;flex-direction:column;gap:2rem}
+  .auth-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:2.5rem;text-align:center;max-width:360px;width:90%}
+  .auth-logo{font-size:13px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-3);margin-bottom:1.5rem}
+  .auth-title{font-size:22px;font-weight:600;color:var(--text);margin-bottom:0.5rem}
+  .auth-sub{font-size:14px;color:var(--text-2);margin-bottom:2rem;line-height:1.5}
+  .auth-divider{display:flex;align-items:center;gap:12px;margin:1.5rem 0;color:var(--text-3);font-size:12px}
+  .auth-divider::before,.auth-divider::after{content:'';flex:1;height:1px;background:var(--border)}
+  #g_id_signin{display:flex;justify-content:center}
+  .auth-note{font-size:12px;color:var(--text-3);margin-top:1rem}
+
+  /* App */
+  #app{display:none;flex-direction:column;min-height:100vh}
+  .topbar{background:var(--surface);border-bottom:1px solid var(--border);padding:0 1.5rem;height:52px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:10}
+  .topbar-left{display:flex;align-items:center;gap:12px}
+  .brand{font-size:13px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-3)}
+  .pipe-badge{font-size:12px;font-weight:500;background:var(--accent-bg);color:var(--accent-text);padding:3px 10px;border-radius:20px}
+  .topbar-right{display:flex;align-items:center;gap:10px}
+  .user-name{font-size:13px;color:var(--text-2)}
+  .avatar{width:30px;height:30px;border-radius:50%;border:1.5px solid var(--border);object-fit:cover}
+  .avatar-fallback{width:30px;height:30px;border-radius:50%;background:var(--accent-bg);color:var(--accent-text);font-size:12px;font-weight:600;display:flex;align-items:center;justify-content:center}
+  .btn-sm{background:none;border:1px solid var(--border);border-radius:6px;padding:5px 10px;font-size:12px;color:var(--text-2);cursor:pointer}
+  .btn-sm:hover{border-color:var(--border-strong);color:var(--text)}
+
+  /* Board */
+  .board-wrap{padding:1.25rem 1.5rem;flex:1;overflow-x:auto}
+  .board{display:flex;gap:12px;align-items:flex-start;min-width:max-content}
+  .col{width:210px;background:var(--surface-1);border:1px solid var(--border);border-radius:var(--radius);padding:10px;flex-shrink:0}
+  .col-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;padding-bottom:8px;border-bottom:1px solid var(--border)}
+  .col-title{font-size:11px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:var(--text-2);display:flex;align-items:center;gap:6px}
+  .stage-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+  .col-count{font-size:11px;color:var(--text-3);background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1px 7px}
+  .cards{min-height:48px;display:flex;flex-direction:column;gap:7px}
+  .card{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:10px 11px;cursor:grab;transition:border-color 0.12s,transform 0.12s}
+  .card:hover{border-color:var(--border-strong)}
+  .card.dragging{opacity:0.35;transform:scale(0.97)}
+  .col.drag-over{background:var(--accent-bg)}
+  .col.drag-over .cards{border-radius:6px}
+  .card-client{font-size:13px;font-weight:600;color:var(--text);margin-bottom:2px}
+  .card-project{font-size:12px;color:var(--text-2);margin-bottom:7px;line-height:1.4}
+  .card-footer{display:flex;align-items:center;justify-content:space-between}
+  .card-value{font-size:12px;font-weight:600;color:var(--accent)}
+  .card-btns{display:flex;gap:3px;opacity:0;transition:opacity 0.12s}
+  .card:hover .card-btns{opacity:1}
+  .card-btn{background:none;border:none;cursor:pointer;color:var(--text-3);font-size:13px;padding:3px 4px;border-radius:4px;line-height:1}
+  .card-btn:hover{background:var(--surface-1);color:var(--text)}
+  .card-notes{font-size:11px;color:var(--text-3);margin-top:5px;border-top:1px solid var(--border);padding-top:5px;line-height:1.4;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+  .add-btn{margin-top:7px;width:100%;background:none;border:1px dashed var(--border);border-radius:7px;padding:6px;font-size:12px;color:var(--text-3);cursor:pointer;display:flex;align-items:center;justify-content:center;gap:4px}
+  .add-btn:hover{border-color:var(--accent);color:var(--accent)}
+
+  /* Stats bar */
+  .stats-bar{display:flex;gap:1.5rem;padding:0.75rem 1.5rem;background:var(--surface);border-bottom:1px solid var(--border);overflow-x:auto}
+  .stat{display:flex;flex-direction:column;gap:2px;flex-shrink:0}
+  .stat-val{font-size:18px;font-weight:600;color:var(--text)}
+  .stat-label{font-size:11px;color:var(--text-3);letter-spacing:0.04em;text-transform:uppercase}
+
+  /* Modal */
+  .overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.4);align-items:center;justify-content:center;z-index:100;padding:1rem}
+  .overlay.open{display:flex}
+  .modal{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:1.5rem;width:100%;max-width:380px}
+  .modal-title{font-size:16px;font-weight:600;margin-bottom:1.25rem;color:var(--text)}
+  .field{margin-bottom:12px}
+  .field label{display:block;font-size:12px;font-weight:500;color:var(--text-2);margin-bottom:4px}
+  .field input,.field select,.field textarea{width:100%;font-size:13px;background:var(--surface-1);border:1px solid var(--border);border-radius:6px;padding:7px 10px;color:var(--text);outline:none}
+  .field input:focus,.field select:focus,.field textarea:focus{border-color:var(--accent)}
+  .field textarea{resize:vertical;min-height:64px;line-height:1.5}
+  .modal-actions{display:flex;gap:8px;justify-content:flex-end;margin-top:1.25rem}
+  .btn-primary{background:var(--accent);color:#fff;border:none;border-radius:6px;padding:8px 16px;font-size:13px;font-weight:500;cursor:pointer}
+  .btn-primary:hover{opacity:0.9}
+  .btn-ghost{background:none;border:1px solid var(--border);border-radius:6px;padding:8px 16px;font-size:13px;color:var(--text-2);cursor:pointer}
+  .btn-ghost:hover{border-color:var(--border-strong)}
+
+  /* Empty state */
+  .empty{text-align:center;padding:1.5rem 0.5rem;color:var(--text-3);font-size:12px}
+</style>
+</head>
+<body>
+
+<div id="auth-screen">
+  <div class="auth-card">
+    <div class="auth-logo">Deeray Multimedia</div>
+    <div class="auth-title">Pipeline</div>
+    <div class="auth-sub">Sign in to access your agency pipeline and opportunity tracker.</div>
+    <div id="g_id_signin"></div>
+    <div class="auth-note">Access is restricted to authorised accounts only.</div>
+  </div>
+</div>
+
+<div id="app">
+  <div class="topbar">
+    <div class="topbar-left">
+      <span class="brand">Deeray Multimedia</span>
+      <span class="pipe-badge" id="pipeline-total">£0 pipeline</span>
+    </div>
+    <div class="topbar-right">
+      <span class="user-name" id="user-name"></span>
+      <div id="user-avatar"></div>
+      <button class="btn-sm" onclick="signOut()">Sign out</button>
+    </div>
+  </div>
+
+  <div class="stats-bar">
+    <div class="stat"><span class="stat-val" id="stat-total">0</span><span class="stat-label">Opportunities</span></div>
+    <div class="stat"><span class="stat-val" id="stat-value">£0</span><span class="stat-label">Pipeline value</span></div>
+    <div class="stat"><span class="stat-val" id="stat-inbuild">0</span><span class="stat-label">In build</span></div>
+    <div class="stat"><span class="stat-val" id="stat-live">0</span><span class="stat-label">Live this year</span></div>
+  </div>
+
+  <div class="board-wrap">
+    <div class="board" id="board"></div>
+  </div>
+</div>
+
+<div class="overlay" id="overlay">
+  <div class="modal">
+    <div class="modal-title" id="modal-title">Add opportunity</div>
+    <div class="field"><label>Client name</label><input type="text" id="f-name" placeholder="e.g. Miles Ahead Care"></div>
+    <div class="field"><label>Project</label><input type="text" id="f-project" placeholder="e.g. Website build + AI widget"></div>
+    <div class="field"><label>Value (£)</label><input type="number" id="f-value" placeholder="e.g. 1950"></div>
+    <div class="field"><label>Stage</label><select id="f-stage"></select></div>
+    <div class="field"><label>Notes</label><textarea id="f-notes" placeholder="Key contacts, next steps, context…"></textarea></div>
+    <div class="modal-actions">
+      <button class="btn-ghost" onclick="closeModal()">Cancel</button>
+      <button class="btn-primary" onclick="saveCard()">Save</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const ALLOWED_EMAILS = [];
+const CLIENT_ID = '1021401833054-kj021cr7g7tqbmpjmbtar2heu1kblao6.apps.googleusercontent.com';
+const STORAGE_KEY = 'dm-pipeline-v1';
+
+const STAGES = [
+  {id:'lead',      label:'Lead / Enquiry',      color:'#888780'},
+  {id:'proposal',  label:'Proposal sent',        color:'#378ADD'},
+  {id:'approval',  label:'Awaiting approval',    color:'#EF9F27'},
+  {id:'build',     label:'In build',             color:'#7F77DD'},
+  {id:'qa',        label:'Review & QA',          color:'#D85A30'},
+  {id:'live',      label:'Live / Completed',     color:'#1D9E75'},
+];
+
+let cards = [];
+let editingId = null;
+let dragId = null;
+let currentUser = null;
+
+function defaultCards() {
+  return [
+    {id:'c1',stage:'approval',name:'Miles Ahead Care',project:'Website build + AI widget',value:1950,notes:'Awaiting Mr. Sunday sign-off. Contact: Manpreet.'},
+    {id:'c2',stage:'approval',name:'NS Care (Anis Care)',project:'Website build',value:1200,notes:'Same sign-off as Miles Ahead. Logo needed from Manpreet.'},
+  ];
+}
+
+function uid(){ return 'c'+Date.now()+Math.random().toString(36).slice(2,5); }
+function esc(s){ return s?s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'):''; }
+
+function loadCards(){
+  try{
+    const raw = localStorage.getItem(STORAGE_KEY);
+    cards = raw ? JSON.parse(raw) : defaultCards();
+  }catch(e){ cards = defaultCards(); }
+}
+
+function saveCards(){
+  try{ localStorage.setItem(STORAGE_KEY, JSON.stringify(cards)); }catch(e){}
+}
+
+function render(){
+  const board = document.getElementById('board');
+  board.innerHTML = '';
+
+  const total = cards.reduce((a,c)=>a+(Number(c.value)||0),0);
+  const inBuild = cards.filter(c=>c.stage==='build').length;
+  const live = cards.filter(c=>c.stage==='live').length;
+
+  document.getElementById('pipeline-total').textContent = '£'+total.toLocaleString()+' pipeline';
+  document.getElementById('stat-total').textContent = cards.length;
+  document.getElementById('stat-value').textContent = '£'+total.toLocaleString();
+  document.getElementById('stat-inbuild').textContent = inBuild;
+  document.getElementById('stat-live').textContent = live;
+
+  const stageSelect = document.getElementById('f-stage');
+  if(!stageSelect.childElementCount){
+    STAGES.forEach(s=>{
+      const o = document.createElement('option');
+      o.value=s.id; o.textContent=s.label;
+      stageSelect.appendChild(o);
+    });
+  }
+
+  STAGES.forEach(stage=>{
+    const stageCards = cards.filter(c=>c.stage===stage.id);
+    const col = document.createElement('div');
+    col.className='col';
+    col.dataset.stage=stage.id;
+
+    col.addEventListener('dragover',e=>{e.preventDefault();col.classList.add('drag-over');});
+    col.addEventListener('dragleave',()=>col.classList.remove('drag-over'));
+    col.addEventListener('drop',e=>{
+      e.preventDefault(); col.classList.remove('drag-over');
+      if(dragId){
+        const c=cards.find(x=>x.id===dragId);
+        if(c){c.stage=stage.id;saveCards();render();}
+      }
+    });
+
+    col.innerHTML=`<div class="col-header">
+      <span class="col-title"><span class="stage-dot" style="background:${stage.color}"></span>${esc(stage.label)}</span>
+      <span class="col-count">${stageCards.length}</span>
+    </div><div class="cards" id="cards-${stage.id}"></div>`;
+
+    const cardsEl = col.querySelector('.cards');
+    if(!stageCards.length){
+      cardsEl.innerHTML='<div class="empty">No opportunities</div>';
+    }
+    stageCards.forEach(card=>{
+      const el=document.createElement('div');
+      el.className='card';
+      el.draggable=true;
+      el.dataset.id=card.id;
+      el.innerHTML=`<div class="card-client">${esc(card.name)}</div>
+        ${card.project?`<div class="card-project">${esc(card.project)}</div>`:''}
+        <div class="card-footer">
+          <span class="card-value">${card.value?'£'+Number(card.value).toLocaleString():''}</span>
+          <span class="card-btns">
+            <button class="card-btn" onclick="editCard('${card.id}')" title="Edit">✎</button>
+            <button class="card-btn" onclick="deleteCard('${card.id}')" title="Delete">✕</button>
+          </span>
+        </div>
+        ${card.notes?`<div class="card-notes">${esc(card.notes)}</div>`:''}`;
+      el.addEventListener('dragstart',()=>{dragId=card.id;setTimeout(()=>el.classList.add('dragging'),0);});
+      el.addEventListener('dragend',()=>{dragId=null;el.classList.remove('dragging');});
+      cardsEl.appendChild(el);
+    });
+
+    const addBtn=document.createElement('button');
+    addBtn.className='add-btn';
+    addBtn.innerHTML='+ Add';
+    addBtn.onclick=()=>openModal(null,stage.id);
+    col.appendChild(addBtn);
+    board.appendChild(col);
+  });
+}
+
+function openModal(id, stageId){
+  editingId=id;
+  document.getElementById('modal-title').textContent=id?'Edit opportunity':'Add opportunity';
+  if(id){
+    const c=cards.find(x=>x.id===id);
+    document.getElementById('f-name').value=c.name||'';
+    document.getElementById('f-project').value=c.project||'';
+    document.getElementById('f-value').value=c.value||'';
+    document.getElementById('f-notes').value=c.notes||'';
+    document.getElementById('f-stage').value=c.stage;
+  } else {
+    document.getElementById('f-name').value='';
+    document.getElementById('f-project').value='';
+    document.getElementById('f-value').value='';
+    document.getElementById('f-notes').value='';
+    if(stageId) document.getElementById('f-stage').value=stageId;
+  }
+  document.getElementById('overlay').classList.add('open');
+  document.getElementById('f-name').focus();
+}
+
+function closeModal(){ document.getElementById('overlay').classList.remove('open'); editingId=null; }
+
+function saveCard(){
+  const name=document.getElementById('f-name').value.trim();
+  if(!name){document.getElementById('f-name').focus();return;}
+  const data={
+    name,
+    project:document.getElementById('f-project').value.trim(),
+    value:document.getElementById('f-value').value||0,
+    notes:document.getElementById('f-notes').value.trim(),
+    stage:document.getElementById('f-stage').value,
+  };
+  if(editingId){
+    const idx=cards.findIndex(c=>c.id===editingId);
+    if(idx>-1) cards[idx]={...cards[idx],...data};
+  } else {
+    cards.push({id:uid(),...data});
+  }
+  saveCards(); closeModal(); render();
+}
+
+function editCard(id){ openModal(id,null); }
+
+function deleteCard(id){
+  if(!confirm('Remove this opportunity?')) return;
+  cards=cards.filter(c=>c.id!==id);
+  saveCards(); render();
+}
+
+document.getElementById('overlay').addEventListener('click',function(e){
+  if(e.target===this) closeModal();
+});
+
+document.addEventListener('keydown',e=>{ if(e.key==='Escape') closeModal(); });
+
+function showApp(user){
+  currentUser=user;
+  document.getElementById('auth-screen').style.display='none';
+  document.getElementById('app').style.display='flex';
+  document.getElementById('user-name').textContent=user.name;
+  const avatarEl=document.getElementById('user-avatar');
+  if(user.picture){
+    avatarEl.innerHTML=`<img src="${user.picture}" class="avatar" alt="${esc(user.name)}">`;
+  } else {
+    const initials=(user.name||'U').split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase();
+    avatarEl.innerHTML=`<div class="avatar-fallback">${initials}</div>`;
+  }
+  loadCards(); render();
+}
+
+function signOut(){
+  google.accounts.id.disableAutoSelect();
+  document.getElementById('app').style.display='none';
+  document.getElementById('auth-screen').style.display='flex';
+  currentUser=null;
+}
+
+function handleCredentialResponse(response){
+  const payload = JSON.parse(atob(response.credential.split('.')[1]));
+  if(ALLOWED_EMAILS.length && !ALLOWED_EMAILS.includes(payload.email)){
+    alert('Access denied. This email is not authorised.');
+    return;
+  }
+  showApp({name: payload.name, email: payload.email, picture: payload.picture});
+}
+
+window.addEventListener('load',()=>{
+  google.accounts.id.initialize({
+    client_id: CLIENT_ID,
+    callback: handleCredentialResponse,
+    auto_select: true,
+  });
+  google.accounts.id.renderButton(
+    document.getElementById('g_id_signin'),
+    {theme:'outline', size:'large', shape:'pill', text:'signin_with', width:260}
+  );
+  google.accounts.id.prompt();
+});
+</script>
+</body>
+</html>
