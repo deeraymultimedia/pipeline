@@ -402,7 +402,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
       <div class="field"><label>Email</label><input type="email" id="f-email" placeholder="name@company.com"><div class="field-err" id="e-email">Invalid email address</div></div>
       <div class="field"><label>Phone</label><input type="tel" id="f-phone" placeholder="e.g. 0333 006 4859"></div>
       <div class="field full"><label>Service *</label><input type="text" id="f-service" placeholder="e.g. Website build + AI widget"><div class="field-err" id="e-service">Service is required</div></div>
-      <div class="field"><label>Stage *</label><select id="f-stage"><option value="">Select stage…</option></select><div class="field-err" id="e-stage">Please select a stage</div></div>
+      <div class="field"><label>Stage *</label><select id="f-stage"></select><div class="field-err" id="e-stage">Please select a stage</div></div>
       <div class="field"><label>Status</label><select id="f-status"><option value="open">Open</option><option value="won">Won</option><option value="lost">Lost</option></select></div>
       <div class="field"><label>One-off project value (£)</label><input type="number" id="f-pval" placeholder="0" min="0"><div class="field-err" id="e-pval">Enter a valid amount</div></div>
       <div class="field"><label>Monthly recurring (£/mo)</label><input type="number" id="f-mval" placeholder="0" min="0"><div class="field-err" id="e-mval">Enter a valid amount</div><div class="field-hint">e.g. £149 care plan + £149 AI = £298</div></div>
@@ -792,7 +792,7 @@ async function logAct(opp_id,client,action,note=''){
 // ── Stage select init ─────────────────────────────────────────────────────────
 function initStageSelect(){
   const s=document.getElementById('f-stage');
-  if(!s.childElementCount){
+  if(s.childElementCount<=1){
     const blank=document.createElement('option');blank.value='';blank.textContent='Select stage…';s.appendChild(blank);
     STAGES.forEach(st=>{const o=document.createElement('option');o.value=st.id;o.textContent=st.label;s.appendChild(o);});
   }
