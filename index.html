@@ -5,113 +5,171 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Deeray Multimedia — Pipeline</title>
 <script src="https://accounts.google.com/gsi/client" async defer></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 <style>
-  *{box-sizing:border-box;margin:0;padding:0}
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#f5f4f2;--surface:#ffffff;--surface-1:#f0efed;--surface-2:#e8e6e2;
+  --border:#e2e0db;--border-strong:#c8c5be;
+  --text:#1a1a18;--text-2:#5a5955;--text-3:#999790;
+  --accent:#0f6e56;--accent-bg:#e1f5ee;--accent-text:#085041;
+  --warn:#854F0B;--warn-bg:#fef3e2;--warn-border:#f5d48a;
+  --danger:#A32D2D;--danger-bg:#fdf0f0;--danger-border:#f5b8b8;
+  --info:#185FA5;--info-bg:#e6f1fb;--info-border:#b5d4f4;
+  --radius:10px;
+  --s-lead:#888780;--s-proposal:#378ADD;--s-approval:#EF9F27;
+  --s-build:#7F77DD;--s-qa:#D85A30;--s-live:#1D9E75;
+}
+@media(prefers-color-scheme:dark){
   :root{
-    --bg:#f8f7f5;
-    --surface:#ffffff;
-    --surface-1:#f1f0ee;
-    --border:#e4e2dd;
-    --border-strong:#c8c5be;
-    --text:#1a1a18;
-    --text-2:#5a5955;
-    --text-3:#999790;
-    --accent:#0f6e56;
-    --accent-bg:#e1f5ee;
-    --accent-text:#085041;
-    --radius:10px;
+    --bg:#111110;--surface:#1c1c1a;--surface-1:#242422;--surface-2:#2c2c29;
+    --border:#2e2e2b;--border-strong:#3d3d3a;
+    --text:#e8e6e0;--text-2:#999790;--text-3:#5a5955;
+    --accent:#1d9e75;--accent-bg:#04342c;--accent-text:#9fe1cb;
+    --warn:#EF9F27;--warn-bg:#2a1f08;--warn-border:#7a4d0a;
+    --danger:#E24B4A;--danger-bg:#2a0f0f;--danger-border:#7a2020;
+    --info:#378ADD;--info-bg:#0c1e35;--info-border:#1a4a7a;
   }
-  @media(prefers-color-scheme:dark){
-    :root{
-      --bg:#131312;
-      --surface:#1e1e1c;
-      --surface-1:#252523;
-      --border:#2e2e2b;
-      --border-strong:#3d3d3a;
-      --text:#e8e6e0;
-      --text-2:#999790;
-      --text-3:#5a5955;
-      --accent:#1d9e75;
-      --accent-bg:#04342c;
-      --accent-text:#9fe1cb;
-    }
-  }
-  body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;font-size:14px}
+}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;font-size:14px}
 
-  /* Auth screen */
-  #auth-screen{display:flex;align-items:center;justify-content:center;min-height:100vh;flex-direction:column;gap:2rem}
-  .auth-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:2.5rem;text-align:center;max-width:360px;width:90%}
-  .auth-logo{font-size:13px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-3);margin-bottom:1.5rem}
-  .auth-title{font-size:22px;font-weight:600;color:var(--text);margin-bottom:0.5rem}
-  .auth-sub{font-size:14px;color:var(--text-2);margin-bottom:2rem;line-height:1.5}
-  .auth-divider{display:flex;align-items:center;gap:12px;margin:1.5rem 0;color:var(--text-3);font-size:12px}
-  .auth-divider::before,.auth-divider::after{content:'';flex:1;height:1px;background:var(--border)}
-  #g_id_signin{display:flex;justify-content:center}
-  .auth-note{font-size:12px;color:var(--text-3);margin-top:1rem}
+/* Auth */
+#auth-screen{display:flex;align-items:center;justify-content:center;min-height:100vh}
+.auth-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:2.5rem;text-align:center;max-width:360px;width:90%}
+.auth-logo{font-size:11px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--text-3);margin-bottom:1.5rem}
+.auth-title{font-size:24px;font-weight:700;margin-bottom:0.5rem}
+.auth-sub{font-size:14px;color:var(--text-2);margin-bottom:2rem;line-height:1.6}
+#g_id_signin{display:flex;justify-content:center}
+.auth-note{font-size:11px;color:var(--text-3);margin-top:1rem}
 
-  /* App */
-  #app{display:none;flex-direction:column;min-height:100vh}
-  .topbar{background:var(--surface);border-bottom:1px solid var(--border);padding:0 1.5rem;height:52px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:10}
-  .topbar-left{display:flex;align-items:center;gap:12px}
-  .brand{font-size:13px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-3)}
-  .pipe-badge{font-size:12px;font-weight:500;background:var(--accent-bg);color:var(--accent-text);padding:3px 10px;border-radius:20px}
-  .topbar-right{display:flex;align-items:center;gap:10px}
-  .user-name{font-size:13px;color:var(--text-2)}
-  .avatar{width:30px;height:30px;border-radius:50%;border:1.5px solid var(--border);object-fit:cover}
-  .avatar-fallback{width:30px;height:30px;border-radius:50%;background:var(--accent-bg);color:var(--accent-text);font-size:12px;font-weight:600;display:flex;align-items:center;justify-content:center}
-  .btn-sm{background:none;border:1px solid var(--border);border-radius:6px;padding:5px 10px;font-size:12px;color:var(--text-2);cursor:pointer}
-  .btn-sm:hover{border-color:var(--border-strong);color:var(--text)}
+/* Shell */
+#app{display:none;flex-direction:column;min-height:100vh}
+.topbar{background:var(--surface);border-bottom:1px solid var(--border);padding:0 1.5rem;height:52px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:20}
+.topbar-left{display:flex;align-items:center;gap:16px}
+.brand{font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-3)}
+.nav-tabs{display:flex;gap:2px}
+.nav-tab{background:none;border:none;padding:6px 12px;font-size:13px;color:var(--text-2);cursor:pointer;border-radius:6px;font-weight:500}
+.nav-tab:hover{background:var(--surface-1);color:var(--text)}
+.nav-tab.active{background:var(--surface-1);color:var(--text)}
+.topbar-right{display:flex;align-items:center;gap:10px}
+.user-name{font-size:13px;color:var(--text-2)}
+.avatar{width:28px;height:28px;border-radius:50%;border:1.5px solid var(--border);object-fit:cover}
+.avatar-fallback{width:28px;height:28px;border-radius:50%;background:var(--accent-bg);color:var(--accent-text);font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center}
+.btn-sm{background:none;border:1px solid var(--border);border-radius:6px;padding:5px 10px;font-size:12px;color:var(--text-2);cursor:pointer}
+.btn-sm:hover{border-color:var(--border-strong);color:var(--text)}
+.btn-accent{background:var(--accent);color:#fff;border:none;border-radius:6px;padding:6px 14px;font-size:13px;font-weight:500;cursor:pointer}
+.btn-accent:hover{opacity:0.88}
 
-  /* Board */
-  .board-wrap{padding:1.25rem 1.5rem;flex:1;overflow-x:auto}
-  .board{display:flex;gap:12px;align-items:flex-start;min-width:max-content}
-  .col{width:210px;background:var(--surface-1);border:1px solid var(--border);border-radius:var(--radius);padding:10px;flex-shrink:0}
-  .col-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;padding-bottom:8px;border-bottom:1px solid var(--border)}
-  .col-title{font-size:11px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:var(--text-2);display:flex;align-items:center;gap:6px}
-  .stage-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
-  .col-count{font-size:11px;color:var(--text-3);background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1px 7px}
-  .cards{min-height:48px;display:flex;flex-direction:column;gap:7px}
-  .card{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:10px 11px;cursor:grab;transition:border-color 0.12s,transform 0.12s}
-  .card:hover{border-color:var(--border-strong)}
-  .card.dragging{opacity:0.35;transform:scale(0.97)}
-  .col.drag-over{background:var(--accent-bg)}
-  .col.drag-over .cards{border-radius:6px}
-  .card-client{font-size:13px;font-weight:600;color:var(--text);margin-bottom:2px}
-  .card-project{font-size:12px;color:var(--text-2);margin-bottom:7px;line-height:1.4}
-  .card-footer{display:flex;align-items:center;justify-content:space-between}
-  .card-value{font-size:12px;font-weight:600;color:var(--accent)}
-  .card-btns{display:flex;gap:3px;opacity:0;transition:opacity 0.12s}
-  .card:hover .card-btns{opacity:1}
-  .card-btn{background:none;border:none;cursor:pointer;color:var(--text-3);font-size:13px;padding:3px 4px;border-radius:4px;line-height:1}
-  .card-btn:hover{background:var(--surface-1);color:var(--text)}
-  .card-notes{font-size:11px;color:var(--text-3);margin-top:5px;border-top:1px solid var(--border);padding-top:5px;line-height:1.4;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
-  .add-btn{margin-top:7px;width:100%;background:none;border:1px dashed var(--border);border-radius:7px;padding:6px;font-size:12px;color:var(--text-3);cursor:pointer;display:flex;align-items:center;justify-content:center;gap:4px}
-  .add-btn:hover{border-color:var(--accent);color:var(--accent)}
+/* Views */
+.view{display:none;padding:1.5rem}
+.view.active{display:block}
 
-  /* Stats bar */
-  .stats-bar{display:flex;gap:1.5rem;padding:0.75rem 1.5rem;background:var(--surface);border-bottom:1px solid var(--border);overflow-x:auto}
-  .stat{display:flex;flex-direction:column;gap:2px;flex-shrink:0}
-  .stat-val{font-size:18px;font-weight:600;color:var(--text)}
-  .stat-label{font-size:11px;color:var(--text-3);letter-spacing:0.04em;text-transform:uppercase}
+/* Dashboard grid */
+.dash-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:1.25rem}
+.stat-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:1rem 1.125rem}
+.stat-card-val{font-size:22px;font-weight:700;color:var(--text);margin-bottom:2px}
+.stat-card-label{font-size:11px;color:var(--text-3);text-transform:uppercase;letter-spacing:0.06em}
+.stat-card.warn{border-color:var(--warn-border);background:var(--warn-bg)}
+.stat-card.warn .stat-card-val{color:var(--warn)}
+.stat-card.danger{border-color:var(--danger-border);background:var(--danger-bg)}
+.stat-card.danger .stat-card-val{color:var(--danger)}
+.stat-card.accent{border-color:#9FE1CB;background:var(--accent-bg)}
+.stat-card.accent .stat-card-val{color:var(--accent)}
 
-  /* Modal */
-  .overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.4);align-items:center;justify-content:center;z-index:100;padding:1rem}
-  .overlay.open{display:flex}
-  .modal{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:1.5rem;width:100%;max-width:380px}
-  .modal-title{font-size:16px;font-weight:600;margin-bottom:1.25rem;color:var(--text)}
-  .field{margin-bottom:12px}
-  .field label{display:block;font-size:12px;font-weight:500;color:var(--text-2);margin-bottom:4px}
-  .field input,.field select,.field textarea{width:100%;font-size:13px;background:var(--surface-1);border:1px solid var(--border);border-radius:6px;padding:7px 10px;color:var(--text);outline:none}
-  .field input:focus,.field select:focus,.field textarea:focus{border-color:var(--accent)}
-  .field textarea{resize:vertical;min-height:64px;line-height:1.5}
-  .modal-actions{display:flex;gap:8px;justify-content:flex-end;margin-top:1.25rem}
-  .btn-primary{background:var(--accent);color:#fff;border:none;border-radius:6px;padding:8px 16px;font-size:13px;font-weight:500;cursor:pointer}
-  .btn-primary:hover{opacity:0.9}
-  .btn-ghost{background:none;border:1px solid var(--border);border-radius:6px;padding:8px 16px;font-size:13px;color:var(--text-2);cursor:pointer}
-  .btn-ghost:hover{border-color:var(--border-strong)}
+/* Dashboard panels */
+.dash-row{display:grid;grid-template-columns:1.4fr 1fr;gap:12px;margin-bottom:1.25rem}
+.dash-row-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+.panel{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:1.125rem}
+.panel-title{font-size:12px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:var(--text-3);margin-bottom:1rem}
+.panel-full{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:1.125rem;margin-bottom:1.25rem}
 
-  /* Empty state */
-  .empty{text-align:center;padding:1.5rem 0.5rem;color:var(--text-3);font-size:12px}
+/* Stage breakdown bars */
+.stage-bar-row{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.stage-bar-label{font-size:12px;color:var(--text-2);width:120px;flex-shrink:0;display:flex;align-items:center;gap:6px}
+.stage-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+.stage-bar-track{flex:1;height:6px;background:var(--surface-2);border-radius:3px;overflow:hidden}
+.stage-bar-fill{height:100%;border-radius:3px;transition:width 0.4s ease}
+.stage-bar-count{font-size:12px;color:var(--text-3);width:16px;text-align:right}
+.stage-bar-val{font-size:12px;font-weight:500;color:var(--text-2);width:52px;text-align:right}
+
+/* Follow-up list */
+.fu-item{display:flex;align-items:flex-start;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border)}
+.fu-item:last-child{border-bottom:none}
+.fu-client{font-size:13px;font-weight:500;color:var(--text)}
+.fu-project{font-size:11px;color:var(--text-3)}
+.fu-badge{font-size:11px;font-weight:600;padding:2px 8px;border-radius:10px;white-space:nowrap;flex-shrink:0}
+.fu-badge.overdue{background:var(--danger-bg);color:var(--danger);border:1px solid var(--danger-border)}
+.fu-badge.due-soon{background:var(--warn-bg);color:var(--warn);border:1px solid var(--warn-border)}
+.fu-badge.ok{background:var(--accent-bg);color:var(--accent-text);border:1px solid #9FE1CB}
+.empty-state{text-align:center;padding:1.5rem;color:var(--text-3);font-size:13px}
+
+/* Activity feed */
+.act-item{display:flex;gap:10px;padding:7px 0;border-bottom:1px solid var(--border)}
+.act-item:last-child{border-bottom:none}
+.act-dot{width:7px;height:7px;border-radius:50%;background:var(--border-strong);flex-shrink:0;margin-top:4px}
+.act-text{font-size:12px;color:var(--text-2);line-height:1.5}
+.act-time{font-size:11px;color:var(--text-3);white-space:nowrap}
+
+/* Board */
+#view-board{padding:1.25rem 1.5rem}
+.board{display:flex;gap:12px;align-items:flex-start;overflow-x:auto;padding-bottom:1rem}
+.col{width:220px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:10px;flex-shrink:0}
+.col-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;padding-bottom:8px;border-bottom:1px solid var(--border)}
+.col-title{font-size:11px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:var(--text-2);display:flex;align-items:center;gap:6px}
+.col-count{font-size:11px;color:var(--text-3);background:var(--surface-1);border:1px solid var(--border);border-radius:10px;padding:1px 7px}
+.cards{min-height:48px;display:flex;flex-direction:column;gap:7px}
+.col.drag-over .cards{background:var(--accent-bg);border-radius:6px}
+
+/* Cards */
+.card{background:var(--surface-1);border:1px solid var(--border);border-radius:8px;padding:10px 11px;cursor:grab;transition:border-color 0.12s;border-left:3px solid transparent}
+.card:hover{border-color:var(--border-strong)}
+.card.dragging{opacity:0.35}
+.card.status-overdue{border-left-color:var(--danger)!important;background:var(--danger-bg)}
+.card.status-due-soon{border-left-color:var(--warn)!important;background:var(--warn-bg)}
+.card.status-ok{border-left-color:var(--accent)}
+.card-stage-pip{height:3px;border-radius:2px;margin-bottom:8px}
+.card-client{font-size:13px;font-weight:600;color:var(--text);margin-bottom:2px}
+.card-project{font-size:12px;color:var(--text-2);margin-bottom:7px;line-height:1.4}
+.card-footer{display:flex;align-items:center;justify-content:space-between;margin-bottom:4px}
+.card-value{font-size:12px;font-weight:600;color:var(--accent)}
+.card-btns{display:flex;gap:3px;opacity:0;transition:opacity 0.12s}
+.card:hover .card-btns{opacity:1}
+.card-btn{background:none;border:none;cursor:pointer;color:var(--text-3);font-size:13px;padding:3px 4px;border-radius:4px}
+.card-btn:hover{background:var(--surface-2);color:var(--text)}
+.card-dates{display:flex;flex-direction:column;gap:3px;margin-top:5px;padding-top:6px;border-top:1px solid var(--border)}
+.date-row{display:flex;align-items:center;justify-content:space-between}
+.date-label{font-size:11px;color:var(--text-3)}
+.date-val{font-size:11px;font-weight:500;color:var(--text-2)}
+.date-val.overdue{color:var(--danger);font-weight:600}
+.date-val.due-soon{color:var(--warn);font-weight:600}
+.card-notes{font-size:11px;color:var(--text-3);margin-top:5px;border-top:1px solid var(--border);padding-top:5px;line-height:1.4;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.add-btn{margin-top:7px;width:100%;background:none;border:1px dashed var(--border);border-radius:7px;padding:6px;font-size:12px;color:var(--text-3);cursor:pointer;display:flex;align-items:center;justify-content:center;gap:4px}
+.add-btn:hover{border-color:var(--accent);color:var(--accent)}
+.col-empty{text-align:center;padding:1.25rem 0.5rem;color:var(--text-3);font-size:12px}
+
+/* Modal */
+.overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.45);align-items:center;justify-content:center;z-index:100;padding:1rem}
+.overlay.open{display:flex}
+.modal{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:1.5rem;width:100%;max-width:420px;max-height:90vh;overflow-y:auto}
+.modal-title{font-size:16px;font-weight:700;margin-bottom:1.25rem}
+.field{margin-bottom:12px}
+.field label{display:block;font-size:12px;font-weight:500;color:var(--text-2);margin-bottom:4px}
+.field input,.field select,.field textarea{width:100%;font-size:13px;background:var(--surface-1);border:1px solid var(--border);border-radius:6px;padding:7px 10px;color:var(--text);outline:none}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--accent)}
+.field textarea{resize:vertical;min-height:64px;line-height:1.5}
+.field-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.field-hint{font-size:11px;color:var(--text-3);margin-top:3px}
+.section-sep{font-size:11px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:var(--text-3);margin:14px 0 8px;padding-top:10px;border-top:1px solid var(--border)}
+.modal-actions{display:flex;gap:8px;justify-content:flex-end;margin-top:1.25rem}
+.btn-primary{background:var(--accent);color:#fff;border:none;border-radius:6px;padding:8px 16px;font-size:13px;font-weight:500;cursor:pointer}
+.btn-primary:hover{opacity:0.9}
+.btn-ghost{background:none;border:1px solid var(--border);border-radius:6px;padding:8px 16px;font-size:13px;color:var(--text-2);cursor:pointer}
+.btn-ghost:hover{border-color:var(--border-strong)}
+
+/* Legend */
+.legend{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:1rem}
+.legend-item{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--text-2)}
+.legend-dot{width:8px;height:8px;border-radius:50%}
 </style>
 </head>
 <body>
@@ -130,23 +188,54 @@
   <div class="topbar">
     <div class="topbar-left">
       <span class="brand">Deeray Multimedia</span>
-      <span class="pipe-badge" id="pipeline-total">£0 pipeline</span>
+      <div class="nav-tabs">
+        <button class="nav-tab active" onclick="switchView('dashboard',this)">Dashboard</button>
+        <button class="nav-tab" onclick="switchView('board',this)">Board</button>
+      </div>
     </div>
     <div class="topbar-right">
+      <button class="btn-accent" onclick="openModal(null,null)">+ Add opportunity</button>
       <span class="user-name" id="user-name"></span>
       <div id="user-avatar"></div>
       <button class="btn-sm" onclick="signOut()">Sign out</button>
     </div>
   </div>
 
-  <div class="stats-bar">
-    <div class="stat"><span class="stat-val" id="stat-total">0</span><span class="stat-label">Opportunities</span></div>
-    <div class="stat"><span class="stat-val" id="stat-value">£0</span><span class="stat-label">Pipeline value</span></div>
-    <div class="stat"><span class="stat-val" id="stat-inbuild">0</span><span class="stat-label">In build</span></div>
-    <div class="stat"><span class="stat-val" id="stat-live">0</span><span class="stat-label">Live this year</span></div>
+  <!-- Dashboard -->
+  <div id="view-dashboard" class="view active">
+    <div class="dash-grid">
+      <div class="stat-card"><div class="stat-card-val" id="d-total">0</div><div class="stat-card-label">Total opportunities</div></div>
+      <div class="stat-card accent"><div class="stat-card-val" id="d-value">£0</div><div class="stat-card-label">Pipeline value</div></div>
+      <div class="stat-card" id="sc-overdue"><div class="stat-card-val" id="d-overdue">0</div><div class="stat-card-label">Follow-ups overdue</div></div>
+      <div class="stat-card"><div class="stat-card-val" id="d-live">0</div><div class="stat-card-label">Live / completed</div></div>
+    </div>
+
+    <div class="dash-row">
+      <div class="panel">
+        <div class="panel-title">Pipeline by stage</div>
+        <div id="stage-bars"></div>
+      </div>
+      <div class="panel">
+        <div class="panel-title">Value by stage</div>
+        <canvas id="stageChart" height="200"></canvas>
+      </div>
+    </div>
+
+    <div class="dash-row">
+      <div class="panel">
+        <div class="panel-title">Upcoming follow-ups</div>
+        <div id="followup-list"></div>
+      </div>
+      <div class="panel">
+        <div class="panel-title">Recent activity</div>
+        <div id="activity-list"></div>
+      </div>
+    </div>
   </div>
 
-  <div class="board-wrap">
+  <!-- Board -->
+  <div id="view-board" style="display:none;padding:1.25rem 1.5rem">
+    <div class="legend" id="board-legend"></div>
     <div class="board" id="board"></div>
   </div>
 </div>
@@ -156,8 +245,15 @@
     <div class="modal-title" id="modal-title">Add opportunity</div>
     <div class="field"><label>Client name</label><input type="text" id="f-name" placeholder="e.g. Miles Ahead Care"></div>
     <div class="field"><label>Project</label><input type="text" id="f-project" placeholder="e.g. Website build + AI widget"></div>
-    <div class="field"><label>Value (£)</label><input type="number" id="f-value" placeholder="e.g. 1950"></div>
-    <div class="field"><label>Stage</label><select id="f-stage"></select></div>
+    <div class="field-row">
+      <div class="field"><label>Value (£)</label><input type="number" id="f-value" placeholder="0"></div>
+      <div class="field"><label>Stage</label><select id="f-stage"></select></div>
+    </div>
+    <div class="section-sep">Dates</div>
+    <div class="field-row">
+      <div class="field"><label>Follow-up date</label><input type="date" id="f-followup"><div class="field-hint">When to next chase</div></div>
+      <div class="field"><label>Expected close</label><input type="date" id="f-close"><div class="field-hint">Target sign-off</div></div>
+    </div>
     <div class="field"><label>Notes</label><textarea id="f-notes" placeholder="Key contacts, next steps, context…"></textarea></div>
     <div class="modal-actions">
       <button class="btn-ghost" onclick="closeModal()">Cancel</button>
@@ -167,99 +263,197 @@
 </div>
 
 <script>
-const ALLOWED_EMAILS = [];
-const CLIENT_ID = '1021401833054-kj021cr7g7tqbmpjmbtar2heu1kblao6.apps.googleusercontent.com';
-const STORAGE_KEY = 'dm-pipeline-v1';
+const CLIENT_ID='1021401833054-kj021cr7g7tqbmpjmbtar2heu1kblao6.apps.googleusercontent.com';
+const ALLOWED_EMAILS=['adegisanrin@gmail.com'];
+const STORAGE_KEY='dm-pipeline-v3';
+const ACT_KEY='dm-pipeline-activity';
 
-const STAGES = [
-  {id:'lead',      label:'Lead / Enquiry',      color:'#888780'},
-  {id:'proposal',  label:'Proposal sent',        color:'#378ADD'},
-  {id:'approval',  label:'Awaiting approval',    color:'#EF9F27'},
-  {id:'build',     label:'In build',             color:'#7F77DD'},
-  {id:'qa',        label:'Review & QA',          color:'#D85A30'},
-  {id:'live',      label:'Live / Completed',     color:'#1D9E75'},
+const STAGES=[
+  {id:'lead',     label:'Lead / Enquiry',   color:'#888780'},
+  {id:'proposal', label:'Proposal sent',    color:'#378ADD'},
+  {id:'approval', label:'Awaiting approval',color:'#EF9F27'},
+  {id:'build',    label:'In build',         color:'#7F77DD'},
+  {id:'qa',       label:'Review & QA',      color:'#D85A30'},
+  {id:'live',     label:'Live / Completed', color:'#1D9E75'},
 ];
 
-let cards = [];
-let editingId = null;
-let dragId = null;
-let currentUser = null;
+let cards=[],activity=[],editingId=null,dragId=null,chartInst=null;
 
-function defaultCards() {
-  return [
-    {id:'c1',stage:'approval',name:'Miles Ahead Care',project:'Website build + AI widget',value:1950,notes:'Awaiting Mr. Sunday sign-off. Contact: Manpreet.'},
-    {id:'c2',stage:'approval',name:'NS Care (Anis Care)',project:'Website build',value:1200,notes:'Same sign-off as Miles Ahead. Logo needed from Manpreet.'},
+function defaultCards(){
+  const t=today();
+  const add=(d,n)=>{const x=new Date(d+'T00:00:00');x.setDate(x.getDate()+n);return x.toISOString().split('T')[0];};
+  return[
+    {id:'c1',stage:'approval',name:'Miles Ahead Care',project:'Website build + AI widget',value:1950,notes:'Awaiting Mr. Sunday sign-off. Contact: Manpreet.',dateAdded:t,followUp:add(t,3),closeDate:add(t,14)},
+    {id:'c2',stage:'approval',name:'NS Care (Anis Care)',project:'Website build',value:1200,notes:'Same sign-off as Miles Ahead. Logo needed from Manpreet.',dateAdded:t,followUp:add(t,3),closeDate:add(t,14)},
   ];
 }
 
-function uid(){ return 'c'+Date.now()+Math.random().toString(36).slice(2,5); }
-function esc(s){ return s?s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'):''; }
+function uid(){return 'c'+Date.now()+Math.random().toString(36).slice(2,5);}
+function esc(s){return s?s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'):'';};
+function today(){const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');}
+function fmtDate(s){if(!s)return null;const d=new Date(s+'T00:00:00');return d.toLocaleDateString('en-GB',{day:'numeric',month:'short'});}
+function fmtDateFull(s){if(!s)return null;const d=new Date(s+'T00:00:00');return d.toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'});}
 
-function loadCards(){
-  try{
-    const raw = localStorage.getItem(STORAGE_KEY);
-    cards = raw ? JSON.parse(raw) : defaultCards();
-  }catch(e){ cards = defaultCards(); }
+function dateStatus(s){
+  if(!s)return null;
+  const t=today();
+  if(s<t)return 'overdue';
+  const soon=new Date();soon.setDate(soon.getDate()+3);
+  if(s<=soon.toISOString().split('T')[0])return 'due-soon';
+  return 'ok';
 }
 
-function saveCards(){
-  try{ localStorage.setItem(STORAGE_KEY, JSON.stringify(cards)); }catch(e){}
+function cardStatus(card){
+  const fu=dateStatus(card.followUp);
+  const cl=dateStatus(card.closeDate);
+  if(fu==='overdue'||cl==='overdue')return 'overdue';
+  if(fu==='due-soon'||cl==='due-soon')return 'due-soon';
+  if(card.followUp||card.closeDate)return 'ok';
+  return null;
 }
 
-function render(){
-  const board = document.getElementById('board');
-  board.innerHTML = '';
+function loadData(){
+  try{const r=localStorage.getItem(STORAGE_KEY);cards=r?JSON.parse(r):defaultCards();}catch(e){cards=defaultCards();}
+  try{const r=localStorage.getItem(ACT_KEY);activity=r?JSON.parse(r):[];}catch(e){activity=[];}
+}
+function saveData(){
+  try{localStorage.setItem(STORAGE_KEY,JSON.stringify(cards));}catch(e){}
+  try{localStorage.setItem(ACT_KEY,JSON.stringify(activity.slice(0,30)));}catch(e){}
+}
+function logActivity(msg){
+  activity.unshift({msg,time:new Date().toISOString()});
+  saveData();
+}
+function timeAgo(iso){
+  const d=new Date(iso),now=new Date();
+  const diff=Math.floor((now-d)/1000);
+  if(diff<60)return 'just now';
+  if(diff<3600)return Math.floor(diff/60)+'m ago';
+  if(diff<86400)return Math.floor(diff/3600)+'h ago';
+  return Math.floor(diff/86400)+'d ago';
+}
 
-  const total = cards.reduce((a,c)=>a+(Number(c.value)||0),0);
-  const inBuild = cards.filter(c=>c.stage==='build').length;
-  const live = cards.filter(c=>c.stage==='live').length;
+function switchView(view,btn){
+  document.querySelectorAll('.nav-tab').forEach(t=>t.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('view-dashboard').style.display=view==='dashboard'?'block':'none';
+  document.getElementById('view-board').style.display=view==='board'?'block':'none';
+  if(view==='dashboard')renderDashboard();
+  if(view==='board')renderBoard();
+}
 
-  document.getElementById('pipeline-total').textContent = '£'+total.toLocaleString()+' pipeline';
-  document.getElementById('stat-total').textContent = cards.length;
-  document.getElementById('stat-value').textContent = '£'+total.toLocaleString();
-  document.getElementById('stat-inbuild').textContent = inBuild;
-  document.getElementById('stat-live').textContent = live;
+function renderDashboard(){
+  const total=cards.length;
+  const value=cards.reduce((a,c)=>a+(Number(c.value)||0),0);
+  const overdue=cards.filter(c=>cardStatus(c)==='overdue').length;
+  const live=cards.filter(c=>c.stage==='live').length;
 
-  const stageSelect = document.getElementById('f-stage');
-  if(!stageSelect.childElementCount){
-    STAGES.forEach(s=>{
-      const o = document.createElement('option');
-      o.value=s.id; o.textContent=s.label;
-      stageSelect.appendChild(o);
-    });
-  }
+  document.getElementById('d-total').textContent=total;
+  document.getElementById('d-value').textContent='£'+value.toLocaleString();
+  document.getElementById('d-overdue').textContent=overdue;
+  document.getElementById('d-live').textContent=live;
+  const sc=document.getElementById('sc-overdue');
+  sc.className='stat-card'+(overdue>0?' danger':'');
+
+  // Stage bars
+  const maxCount=Math.max(...STAGES.map(s=>cards.filter(c=>c.stage===s.id).length),1);
+  const barsEl=document.getElementById('stage-bars');
+  barsEl.innerHTML='';
+  STAGES.forEach(s=>{
+    const sc=cards.filter(c=>c.stage===s.id);
+    const sv=sc.reduce((a,c)=>a+(Number(c.value)||0),0);
+    const pct=Math.round((sc.length/maxCount)*100);
+    barsEl.innerHTML+=`<div class="stage-bar-row">
+      <span class="stage-bar-label"><span class="stage-dot" style="background:${s.color}"></span>${s.label}</span>
+      <div class="stage-bar-track"><div class="stage-bar-fill" style="width:${pct}%;background:${s.color}"></div></div>
+      <span class="stage-bar-count">${sc.length}</span>
+      <span class="stage-bar-val">${sv?'£'+sv.toLocaleString():''}</span>
+    </div>`;
+  });
+
+  // Chart
+  const ctx=document.getElementById('stageChart').getContext('2d');
+  const labels=STAGES.filter(s=>cards.some(c=>c.stage===s.id)).map(s=>s.label);
+  const vals=STAGES.filter(s=>cards.some(c=>c.stage===s.id)).map(s=>cards.filter(c=>c.stage===s.id).reduce((a,c)=>a+(Number(c.value)||0),0));
+  const colors=STAGES.filter(s=>cards.some(c=>c.stage===s.id)).map(s=>s.color);
+  if(chartInst)chartInst.destroy();
+  chartInst=new Chart(ctx,{
+    type:'doughnut',
+    data:{labels,datasets:[{data:vals,backgroundColor:colors,borderWidth:0,hoverOffset:4}]},
+    options:{plugins:{legend:{position:'bottom',labels:{boxWidth:8,padding:10,font:{size:11}}}},cutout:'65%',responsive:true}
+  });
+
+  // Follow-ups
+  const fuEl=document.getElementById('followup-list');
+  const upcoming=cards.filter(c=>c.followUp&&c.stage!=='live').sort((a,b)=>a.followUp.localeCompare(b.followUp)).slice(0,6);
+  if(!upcoming.length){fuEl.innerHTML='<div class="empty-state">No follow-ups scheduled</div>';return;}
+  fuEl.innerHTML=upcoming.map(c=>{
+    const st=dateStatus(c.followUp);
+    const label=st==='overdue'?'Overdue':st==='due-soon'?fmtDate(c.followUp)+' ⚡':fmtDate(c.followUp);
+    return `<div class="fu-item">
+      <div><div class="fu-client">${esc(c.name)}</div><div class="fu-project">${esc(c.project||'')}</div></div>
+      <span class="fu-badge ${st||'ok'}">${label}</span>
+    </div>`;
+  }).join('');
+
+  // Activity
+  const actEl=document.getElementById('activity-list');
+  if(!activity.length){actEl.innerHTML='<div class="empty-state">No activity yet</div>';return;}
+  actEl.innerHTML=activity.slice(0,8).map(a=>`<div class="act-item">
+    <div class="act-dot"></div>
+    <div style="flex:1"><div class="act-text">${esc(a.msg)}</div></div>
+    <div class="act-time">${timeAgo(a.time)}</div>
+  </div>`).join('');
+}
+
+function renderBoard(){
+  // Legend
+  const legend=document.getElementById('board-legend');
+  legend.innerHTML=`
+    <span style="font-size:11px;color:var(--text-3);margin-right:4px">Stage:</span>
+    ${STAGES.map(s=>`<span class="legend-item"><span class="legend-dot" style="background:${s.color}"></span>${s.label}</span>`).join('')}
+    <span style="margin-left:12px;font-size:11px;color:var(--text-3)">Status:</span>
+    <span class="legend-item"><span class="legend-dot" style="background:var(--danger)"></span>Overdue</span>
+    <span class="legend-item"><span class="legend-dot" style="background:var(--warn)"></span>Due soon</span>
+    <span class="legend-item"><span class="legend-dot" style="background:var(--accent)"></span>On track</span>`;
+
+  const board=document.getElementById('board');
+  board.innerHTML='';
+  initStageSelect();
 
   STAGES.forEach(stage=>{
-    const stageCards = cards.filter(c=>c.stage===stage.id);
-    const col = document.createElement('div');
-    col.className='col';
-    col.dataset.stage=stage.id;
-
+    const sc=cards.filter(c=>c.stage===stage.id);
+    const col=document.createElement('div');
+    col.className='col';col.dataset.stage=stage.id;
     col.addEventListener('dragover',e=>{e.preventDefault();col.classList.add('drag-over');});
     col.addEventListener('dragleave',()=>col.classList.remove('drag-over'));
     col.addEventListener('drop',e=>{
-      e.preventDefault(); col.classList.remove('drag-over');
+      e.preventDefault();col.classList.remove('drag-over');
       if(dragId){
         const c=cards.find(x=>x.id===dragId);
-        if(c){c.stage=stage.id;saveCards();render();}
+        if(c&&c.stage!==stage.id){
+          c.stage=stage.id;
+          logActivity(`${c.name} moved to ${stage.label}`);
+          saveData();renderBoard();
+          if(document.getElementById('view-dashboard').style.display!=='none')renderDashboard();
+        }
       }
     });
-
     col.innerHTML=`<div class="col-header">
       <span class="col-title"><span class="stage-dot" style="background:${stage.color}"></span>${esc(stage.label)}</span>
-      <span class="col-count">${stageCards.length}</span>
+      <span class="col-count">${sc.length}</span>
     </div><div class="cards" id="cards-${stage.id}"></div>`;
-
-    const cardsEl = col.querySelector('.cards');
-    if(!stageCards.length){
-      cardsEl.innerHTML='<div class="empty">No opportunities</div>';
-    }
-    stageCards.forEach(card=>{
+    const ce=col.querySelector('.cards');
+    if(!sc.length)ce.innerHTML=`<div class="col-empty">No opportunities</div>`;
+    sc.forEach(card=>{
+      const st=cardStatus(card);
+      const fu=dateStatus(card.followUp);
+      const cl=dateStatus(card.closeDate);
       const el=document.createElement('div');
-      el.className='card';
-      el.draggable=true;
-      el.dataset.id=card.id;
-      el.innerHTML=`<div class="card-client">${esc(card.name)}</div>
+      el.className='card'+(st?' status-'+st:'');
+      el.draggable=true;el.dataset.id=card.id;
+      el.innerHTML=`<div class="card-stage-pip" style="background:${stage.color};opacity:0.6"></div>
+        <div class="card-client">${esc(card.name)}</div>
         ${card.project?`<div class="card-project">${esc(card.project)}</div>`:''}
         <div class="card-footer">
           <span class="card-value">${card.value?'£'+Number(card.value).toLocaleString():''}</span>
@@ -268,24 +462,30 @@ function render(){
             <button class="card-btn" onclick="deleteCard('${card.id}')" title="Delete">✕</button>
           </span>
         </div>
+        ${(card.dateAdded||card.followUp||card.closeDate)?`<div class="card-dates">
+          ${card.dateAdded?`<div class="date-row"><span class="date-label">Added</span><span class="date-val">${fmtDateFull(card.dateAdded)}</span></div>`:''}
+          ${card.followUp?`<div class="date-row"><span class="date-label">Follow-up</span><span class="date-val ${fu&&fu!=='ok'?fu:''}">${fmtDateFull(card.followUp)}${fu==='overdue'?' ⚠':fu==='due-soon'?' ⚡':''}</span></div>`:''}
+          ${card.closeDate?`<div class="date-row"><span class="date-label">Close by</span><span class="date-val ${cl&&cl!=='ok'?cl:''}">${fmtDateFull(card.closeDate)}</span></div>`:''}
+        </div>`:''}
         ${card.notes?`<div class="card-notes">${esc(card.notes)}</div>`:''}`;
       el.addEventListener('dragstart',()=>{dragId=card.id;setTimeout(()=>el.classList.add('dragging'),0);});
       el.addEventListener('dragend',()=>{dragId=null;el.classList.remove('dragging');});
-      cardsEl.appendChild(el);
+      ce.appendChild(el);
     });
-
-    const addBtn=document.createElement('button');
-    addBtn.className='add-btn';
-    addBtn.innerHTML='+ Add';
-    addBtn.onclick=()=>openModal(null,stage.id);
-    col.appendChild(addBtn);
-    board.appendChild(col);
+    const ab=document.createElement('button');ab.className='add-btn';ab.innerHTML='+ Add';ab.onclick=()=>openModal(null,stage.id);
+    col.appendChild(ab);board.appendChild(col);
   });
 }
 
-function openModal(id, stageId){
+function initStageSelect(){
+  const sel=document.getElementById('f-stage');
+  if(!sel.childElementCount) STAGES.forEach(s=>{const o=document.createElement('option');o.value=s.id;o.textContent=s.label;sel.appendChild(o);});
+}
+
+function openModal(id,stageId){
   editingId=id;
   document.getElementById('modal-title').textContent=id?'Edit opportunity':'Add opportunity';
+  initStageSelect();
   if(id){
     const c=cards.find(x=>x.id===id);
     document.getElementById('f-name').value=c.name||'';
@@ -293,93 +493,75 @@ function openModal(id, stageId){
     document.getElementById('f-value').value=c.value||'';
     document.getElementById('f-notes').value=c.notes||'';
     document.getElementById('f-stage').value=c.stage;
+    document.getElementById('f-followup').value=c.followUp||'';
+    document.getElementById('f-close').value=c.closeDate||'';
   } else {
-    document.getElementById('f-name').value='';
-    document.getElementById('f-project').value='';
-    document.getElementById('f-value').value='';
-    document.getElementById('f-notes').value='';
-    if(stageId) document.getElementById('f-stage').value=stageId;
+    ['f-name','f-project','f-value','f-notes','f-followup','f-close'].forEach(id=>document.getElementById(id).value='');
+    if(stageId)document.getElementById('f-stage').value=stageId;
   }
   document.getElementById('overlay').classList.add('open');
-  document.getElementById('f-name').focus();
+  setTimeout(()=>document.getElementById('f-name').focus(),50);
 }
 
-function closeModal(){ document.getElementById('overlay').classList.remove('open'); editingId=null; }
+function closeModal(){document.getElementById('overlay').classList.remove('open');editingId=null;}
 
 function saveCard(){
   const name=document.getElementById('f-name').value.trim();
   if(!name){document.getElementById('f-name').focus();return;}
-  const data={
-    name,
-    project:document.getElementById('f-project').value.trim(),
-    value:document.getElementById('f-value').value||0,
-    notes:document.getElementById('f-notes').value.trim(),
-    stage:document.getElementById('f-stage').value,
-  };
+  const data={name,project:document.getElementById('f-project').value.trim(),value:Number(document.getElementById('f-value').value)||0,notes:document.getElementById('f-notes').value.trim(),stage:document.getElementById('f-stage').value,followUp:document.getElementById('f-followup').value,closeDate:document.getElementById('f-close').value};
   if(editingId){
     const idx=cards.findIndex(c=>c.id===editingId);
-    if(idx>-1) cards[idx]={...cards[idx],...data};
+    if(idx>-1){cards[idx]={...cards[idx],...data};logActivity(`Updated ${data.name}`);}
   } else {
-    cards.push({id:uid(),...data});
+    cards.push({id:uid(),dateAdded:today(),...data});
+    logActivity(`Added ${data.name} — ${STAGES.find(s=>s.id===data.stage)?.label}`);
   }
-  saveCards(); closeModal(); render();
+  saveData();closeModal();
+  renderDashboard();
+  if(document.getElementById('view-board').style.display!=='none')renderBoard();
 }
 
-function editCard(id){ openModal(id,null); }
-
+function editCard(id){openModal(id,null);}
 function deleteCard(id){
-  if(!confirm('Remove this opportunity?')) return;
+  const c=cards.find(x=>x.id===id);
+  if(!confirm('Remove '+(c&&c.name?c.name.replace(/[<>&"]/g,''):'this opportunity')+'?'))return;
+  logActivity(`Removed ${c?.name||'opportunity'}`);
   cards=cards.filter(c=>c.id!==id);
-  saveCards(); render();
+  saveData();
+  renderBoard();
+  renderDashboard();
 }
 
-document.getElementById('overlay').addEventListener('click',function(e){
-  if(e.target===this) closeModal();
-});
-
-document.addEventListener('keydown',e=>{ if(e.key==='Escape') closeModal(); });
+document.getElementById('overlay').addEventListener('click',function(e){if(e.target===this)closeModal();});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal();});
 
 function showApp(user){
-  currentUser=user;
   document.getElementById('auth-screen').style.display='none';
   document.getElementById('app').style.display='flex';
   document.getElementById('user-name').textContent=user.name;
-  const avatarEl=document.getElementById('user-avatar');
-  if(user.picture){
-    avatarEl.innerHTML=`<img src="${user.picture}" class="avatar" alt="${esc(user.name)}">`;
-  } else {
-    const initials=(user.name||'U').split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase();
-    avatarEl.innerHTML=`<div class="avatar-fallback">${initials}</div>`;
-  }
-  loadCards(); render();
+  const av=document.getElementById('user-avatar');
+  if(user.picture)av.innerHTML=`<img src="${user.picture}" class="avatar" alt="">`;
+  else{const i=(user.name||'U').split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase();av.innerHTML=`<div class="avatar-fallback">${i}</div>`;}
+  loadData();
+  renderDashboard();
 }
 
 function signOut(){
   google.accounts.id.disableAutoSelect();
   document.getElementById('app').style.display='none';
   document.getElementById('auth-screen').style.display='flex';
-  currentUser=null;
+  if(chartInst){chartInst.destroy();chartInst=null;}
 }
 
 function handleCredentialResponse(response){
-  const payload = JSON.parse(atob(response.credential.split('.')[1]));
-  if(ALLOWED_EMAILS.length && !ALLOWED_EMAILS.includes(payload.email)){
-    alert('Access denied. This email is not authorised.');
-    return;
-  }
-  showApp({name: payload.name, email: payload.email, picture: payload.picture});
+  const p=JSON.parse(atob(response.credential.split('.')[1]));
+  if(ALLOWED_EMAILS.length&&!ALLOWED_EMAILS.includes(p.email)){alert('Access denied.');return;}
+  showApp({name:p.name,email:p.email,picture:p.picture});
 }
 
 window.addEventListener('load',()=>{
-  google.accounts.id.initialize({
-    client_id: CLIENT_ID,
-    callback: handleCredentialResponse,
-    auto_select: true,
-  });
-  google.accounts.id.renderButton(
-    document.getElementById('g_id_signin'),
-    {theme:'outline', size:'large', shape:'pill', text:'signin_with', width:260}
-  );
+  google.accounts.id.initialize({client_id:CLIENT_ID,callback:handleCredentialResponse,auto_select:true});
+  google.accounts.id.renderButton(document.getElementById('g_id_signin'),{theme:'outline',size:'large',shape:'pill',width:260});
   google.accounts.id.prompt();
 });
 </script>
