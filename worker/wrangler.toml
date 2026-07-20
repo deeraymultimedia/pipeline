@@ -1,0 +1,20 @@
+# Deeray Pipeline Worker — wrangler.toml
+# SECURITY: No secrets, tokens, or placeholder values are stored in this file.
+# GHL_TOKEN and all other secrets are stored via:
+#   - Local dev: .dev.vars (in .gitignore — never committed)
+#   - Production: Cloudflare dashboard Secrets or `wrangler secret put`
+# Do not add [vars] entries for sensitive values.
+
+name = "deeray-pipeline-worker"
+main = "src/index.ts"
+compatibility_date = "2024-09-01"
+
+# Local development port
+# Run with: wrangler dev
+# Access at: http://localhost:8787
+
+[build]
+command = ""
+
+# No environment-specific vars that contain secrets.
+# Trigger-based deployment is deferred to Phase 3.
