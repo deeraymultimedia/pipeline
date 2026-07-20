@@ -174,8 +174,10 @@ describe('URL parameter handling', () => {
   it('/pipeline?stage=proposal passes stage param to PipelineView', () => {
     const router = buildTestRouter(['/pipeline?stage=proposal']);
     render(<RouterProvider router={router} />);
-    // PipelineView reads ?stage from searchParams and shows it in description
-    expect(screen.getByText(/proposal/i)).toBeDefined();
+    // PipelineView reads ?stage from searchParams and renders an active filter chip
+    expect(
+      screen.getByRole('button', { name: 'Remove filter: proposal' })
+    ).toBeInTheDocument();
   });
 });
 

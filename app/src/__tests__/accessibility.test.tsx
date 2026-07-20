@@ -12,7 +12,7 @@
  */
 
 import { describe, it, expect, vi } from 'vitest';
-import { render, screen, within } from '@testing-library/react';
+import { render, screen, within, fireEvent } from '@testing-library/react';
 import { createMemoryRouter, RouterProvider } from 'react-router-dom';
 
 vi.mock('../contexts/AuthContext', () => ({
@@ -97,6 +97,37 @@ describe('Skip link', () => {
     render(<RouterProvider router={router} />);
     const link = screen.getByText(/skip to main content/i) as HTMLAnchorElement;
     expect(link.getAttribute('href')).toBe('#main-content');
+  });
+
+  it('clicking skip link does not navigate away from the current route', () => {
+    // Regression: href="#main-content" used to trigger hash-router navigation
+    // to an unknown route (/main-content), showing the error page.
+    // The onClick handler must call e.preventDefault() so the URL never changes.
+    const router = buildRouter('/');
+    render(<RouterProvider router={router} />);
+    const link = screen.getByText(/skip to main content/i);
+    fireEvent.click(link);
+    // Today view must still be visible — no error page
+    expect(screen.getByRole('heading', { name: /today/i, level: 1 })).toBeDefined();
+  });
+
+  it('clicking skip link moves focus to the main content element', () => {
+    const router = buildRouter('/');
+    render(<RouterProvider router={router} />);
+    const link = screen.getByText(/skip to main content/i);
+    fireEvent.click(link);
+    const main = document.getElementById('main-content');
+    expect(document.activeElement).toBe(main);
+  });
+});
+
+describe('Main content element', () => {
+  it('has tabIndex -1 so the skip link can move focus to it programmatically', () => {
+    const router = buildRouter('/');
+    render(<RouterProvider router={router} />);
+    const main = document.getElementById('main-content');
+    expect(main).not.toBeNull();
+    expect(main?.getAttribute('tabindex')).toBe('-1');
   });
 });
 
