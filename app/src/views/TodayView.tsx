@@ -121,7 +121,7 @@ export function TodayView() {
         <section aria-labelledby="tasks-heading" className="bg-white rounded-xl border border-border-subtle shadow-card p-5">
           <div className="flex items-center justify-between mb-4">
             <h2 id="tasks-heading" className="font-semibold text-navy">Tasks this week</h2>
-            <Link to="/tasks" className="text-teal text-xs font-medium hover:underline">
+            <Link to="/tasks" className="text-teal text-xs font-medium hover:underline py-1 px-2 -mr-2 rounded">
               View all
             </Link>
           </div>
@@ -131,7 +131,7 @@ export function TodayView() {
           )}
 
           {overdueTasks.length > 0 && (
-            <div className="mb-3">
+            <div className="mb-3 mt-1">
               <p className="text-xs font-medium text-red-600 uppercase tracking-wide mb-2">Overdue</p>
               <ul role="list" className="flex flex-col gap-2">
                 {overdueTasks.map((task) => (
@@ -171,7 +171,7 @@ export function TodayView() {
         <section aria-labelledby="attention-heading" className="bg-white rounded-xl border border-border-subtle shadow-card p-5">
           <div className="flex items-center justify-between mb-4">
             <h2 id="attention-heading" className="font-semibold text-navy">Needs attention</h2>
-            <Link to="/pipeline" className="text-teal text-xs font-medium hover:underline">
+            <Link to="/pipeline" className="text-teal text-xs font-medium hover:underline py-1 px-2 -mr-2 rounded">
               View pipeline
             </Link>
           </div>
@@ -211,12 +211,12 @@ export function TodayView() {
       <section aria-labelledby="activity-heading" className="bg-white rounded-xl border border-border-subtle shadow-card p-5">
         <div className="flex items-center justify-between mb-4">
           <h2 id="activity-heading" className="font-semibold text-navy">Recent activity</h2>
-          <Link to="/engagements" className="text-teal text-xs font-medium hover:underline">
+          <Link to="/engagements" className="text-teal text-xs font-medium hover:underline py-1 px-2 -mr-2 rounded">
             View all
           </Link>
         </div>
 
-        <ul role="list" className="flex flex-col gap-3">
+        <ul role="list" className="flex flex-col gap-2">
           {recentActivities.map((act) => {
             const clientName = getClientForActivity(act.opportunity_id);
             const oppId = act.opportunity_id;
@@ -237,7 +237,7 @@ export function TodayView() {
                     </Link>
                   </p>
                   <p className="text-xs text-text-muted mt-0.5 line-clamp-1">{act.note}</p>
-                  <time dateTime={act.created_at} className="text-2xs text-text-muted">
+                  <time dateTime={act.created_at} className="text-xs text-text-muted">
                     {formatDate(act.created_at)}
                   </time>
                 </div>

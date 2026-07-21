@@ -8,23 +8,26 @@
  * Hidden at lg breakpoint and above.
  * Touch targets meet minimum 44×44px.
  * Safe area bottom padding for notched devices.
+ *
+ * Batch 1C.1: Unicode placeholder icons replaced with NavIcon SVG components.
  */
 
 import { NavLink } from 'react-router-dom';
+import { NavIcon, type NavIconName } from './ui/NavIcon';
 
 interface MobileNavItem {
   to: string;
   label: string;
-  icon: string;
+  icon: NavIconName;
   end?: boolean;
 }
 
 const MOBILE_NAV_ITEMS: MobileNavItem[] = [
-  { to: '/',         label: 'Today',    icon: '◎', end: true },
-  { to: '/pipeline', label: 'Pipeline', icon: '⊞' },
-  { to: '/clients',  label: 'Clients',  icon: '👤' },
-  { to: '/tasks',    label: 'Tasks',    icon: '☑' },
-  { to: '/settings', label: 'More',     icon: '⋯' },
+  { to: '/',         label: 'Today',    icon: 'today',    end: true },
+  { to: '/pipeline', label: 'Pipeline', icon: 'pipeline' },
+  { to: '/clients',  label: 'Clients',  icon: 'clients' },
+  { to: '/tasks',    label: 'Tasks',    icon: 'tasks' },
+  { to: '/settings', label: 'More',     icon: 'more' },
 ];
 
 export function MobileBottomNav() {
@@ -50,9 +53,7 @@ export function MobileBottomNav() {
                 ].join(' ')
               }
             >
-              <span className="mobile-nav-icon text-xl leading-none" aria-hidden="true">
-                {item.icon}
-              </span>
+              <NavIcon name={item.icon} />
               <span className="mobile-nav-label">{item.label}</span>
             </NavLink>
           </li>

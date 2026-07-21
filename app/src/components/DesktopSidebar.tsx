@@ -6,26 +6,29 @@
  *
  * Dark navy background with teal active accent.
  * Hidden below lg breakpoint (mobile uses MobileBottomNav instead).
+ *
+ * Batch 1C.1: Unicode placeholder icons replaced with NavIcon SVG components.
  */
 
 import { NavLink } from 'react-router-dom';
 import { COMPANY } from '../constants/company';
+import { NavIcon, type NavIconName } from './ui/NavIcon';
 
 interface NavItem {
   to: string;
   label: string;
-  icon: string; // Placeholder text icon — replace with SVG icons in later batches
+  icon: NavIconName;
   end?: boolean;
 }
 
 const NAV_ITEMS: NavItem[] = [
-  { to: '/',            label: 'Today',       icon: '◎', end: true },
-  { to: '/pipeline',    label: 'Pipeline',    icon: '⊞' },
-  { to: '/clients',     label: 'Clients',     icon: '👤' },
-  { to: '/engagements', label: 'Engagements', icon: '↔' },
-  { to: '/tasks',       label: 'Tasks',       icon: '☑' },
-  { to: '/revenue',     label: 'Revenue',     icon: '£' },
-  { to: '/settings',    label: 'Settings',    icon: '⚙' },
+  { to: '/',            label: 'Today',       icon: 'today',       end: true },
+  { to: '/pipeline',    label: 'Pipeline',    icon: 'pipeline' },
+  { to: '/clients',     label: 'Clients',     icon: 'clients' },
+  { to: '/engagements', label: 'Engagements', icon: 'engagements' },
+  { to: '/tasks',       label: 'Tasks',       icon: 'tasks' },
+  { to: '/revenue',     label: 'Revenue',     icon: 'revenue' },
+  { to: '/settings',    label: 'Settings',    icon: 'settings' },
 ];
 
 export function DesktopSidebar() {
@@ -65,9 +68,7 @@ export function DesktopSidebar() {
                 ].join(' ')
               }
             >
-              <span className="nav-icon w-5 text-center" aria-hidden="true">
-                {item.icon}
-              </span>
+              <NavIcon name={item.icon} className="shrink-0" />
               {item.label}
             </NavLink>
           </li>
@@ -76,7 +77,7 @@ export function DesktopSidebar() {
 
       {/* Footer */}
       <div className="sidebar-footer px-6 py-4 border-t border-white/10">
-        <p className="text-white/40 text-xs">{COMPANY.taglines.primary}</p>
+        <p className="text-white/50 text-xs">{COMPANY.taglines.primary}</p>
       </div>
     </nav>
   );

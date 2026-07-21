@@ -10,26 +10,34 @@
  *   - Focus restored to triggerRef on close (via useEffect cleanup)
  *   - motion-reduce:transition-none on slide transition
  *   - Close button: min-h-[44px] min-w-[44px]
+ *
+ * Batch 1C.1:
+ *   - Emoji nav icons replaced with NavIcon SVG components
+ *   - Brand text corrected from "Deeray" to COMPANY.name
+ *   - Close glyph replaced with NavIcon name="close"
+ *   - Close button has explicit focus-visible ring
  */
 
 import { useEffect, useRef, type RefObject, type KeyboardEvent } from 'react';
 import { NavLink } from 'react-router-dom';
+import { COMPANY } from '../constants/company';
+import { NavIcon, type NavIconName } from './ui/NavIcon';
 
 interface NavItem {
   to: string;
   label: string;
-  icon: string;
+  icon: NavIconName;
   end?: boolean;
 }
 
 const NAV_ITEMS: NavItem[] = [
-  { to: '/',             label: 'Today',        icon: '🏠', end: true },
-  { to: '/pipeline',     label: 'Pipeline',     icon: '📊' },
-  { to: '/clients',      label: 'Clients',      icon: '👥' },
-  { to: '/engagements',  label: 'Engagements',  icon: '📋' },
-  { to: '/tasks',        label: 'Tasks',        icon: '✅' },
-  { to: '/revenue',      label: 'Revenue',      icon: '💷' },
-  { to: '/settings',     label: 'Settings',     icon: '⚙️' },
+  { to: '/',             label: 'Today',        icon: 'today',       end: true },
+  { to: '/pipeline',     label: 'Pipeline',     icon: 'pipeline' },
+  { to: '/clients',      label: 'Clients',      icon: 'clients' },
+  { to: '/engagements',  label: 'Engagements',  icon: 'engagements' },
+  { to: '/tasks',        label: 'Tasks',         icon: 'tasks' },
+  { to: '/revenue',      label: 'Revenue',      icon: 'revenue' },
+  { to: '/settings',     label: 'Settings',     icon: 'settings' },
 ];
 
 const FOCUSABLE =
@@ -118,15 +126,15 @@ export function MobileDrawer({ onClose, triggerRef }: MobileDrawerProps) {
             >
               DM
             </div>
-            <span className="text-white text-sm font-semibold">Deeray</span>
+            <span className="text-white text-sm font-semibold">{COMPANY.name}</span>
           </div>
           <button
             type="button"
             onClick={onClose}
             aria-label="Close navigation menu"
-            className="text-white/70 hover:text-white min-h-[44px] min-w-[44px] flex items-center justify-center rounded-lg hover:bg-white/10 transition-colors"
+            className="text-white/70 hover:text-white min-h-[44px] min-w-[44px] flex items-center justify-center rounded-lg hover:bg-white/10 transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
           >
-            <span aria-hidden="true" className="text-lg">✕</span>
+            <NavIcon name="close" />
           </button>
         </div>
 
@@ -147,7 +155,7 @@ export function MobileDrawer({ onClose, triggerRef }: MobileDrawerProps) {
                     }`
                   }
                 >
-                  <span className="text-lg" aria-hidden="true">{item.icon}</span>
+                  <NavIcon name={item.icon} />
                   {item.label}
                 </NavLink>
               </li>

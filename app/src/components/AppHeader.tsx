@@ -83,7 +83,7 @@ export function AppHeader({ onMenuOpen, menuButtonRef }: AppHeaderProps) {
         {/* Mobile brand (hidden on desktop where sidebar shows branding) */}
         <div className="lg:hidden flex items-center gap-2">
           <div
-            className="w-7 h-7 rounded bg-navy flex items-center justify-center text-white text-xs font-bold"
+            className="w-7 h-7 rounded bg-teal flex items-center justify-center text-white text-xs font-bold"
             aria-hidden="true"
           >
             DM
@@ -92,7 +92,7 @@ export function AppHeader({ onMenuOpen, menuButtonRef }: AppHeaderProps) {
         </div>
 
         {/* Desktop: page title */}
-        <span className="hidden lg:block text-navy font-semibold">{pageTitle}</span>
+        <span className="hidden lg:block text-base font-semibold text-navy">{pageTitle}</span>
       </div>
 
       {/* Right: demo pill + avatar + sign out */}

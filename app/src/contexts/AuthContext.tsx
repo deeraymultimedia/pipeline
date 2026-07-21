@@ -20,6 +20,13 @@
  *   - drive_permission_not_granted  (future)
  *   - picker_unavailable            (future)
  *   - reauthorisation_cancelled
+ *
+ * Local review mode (DEV only):
+ *   - Activated when import.meta.env.DEV === true AND VITE_BYPASS_AUTH === 'true'
+ *   - Both conditions are required; production builds hard-code DEV to false,
+ *     making this path dead code that is tree-shaken at build time.
+ *   - Intended for local product-owner review without Google OAuth configuration.
+ *   - Uses a fictional placeholder token; no Google API is called.
  */
 
 import React, {
@@ -111,7 +118,26 @@ const SHEETS_SCOPE = 'https://www.googleapis.com/auth/spreadsheets';
 // ─── Provider ─────────────────────────────────────────────────────────────────
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
-  const [auth, setAuth] = useState<AuthState>({ status: 'unauthenticated' });
+  // ─── Local review mode ──────────────────────────────────────────────────────
+  // DEV-only bypass for local product-owner review without Google OAuth.
+  // Both conditions must be true:
+  //   • import.meta.env.DEV        — compile-time false in every production build
+  //   • VITE_BYPASS_AUTH === 'true' — must be explicitly set in app/.env.local
+  // This initialisation path is dead code in any production bundle.
+  const isLocalReviewMode =
+    import.meta.env.DEV === true &&
+    import.meta.env.VITE_BYPASS_AUTH === 'true';
+
+  const [auth, setAuth] = useState<AuthState>(
+    isLocalReviewMode
+      ? {
+          status: 'authenticated',
+          email: 'local-review@example.com',
+          accessToken: 'local-review-token',
+          expiresAt: Number.MAX_SAFE_INTEGER,
+        }
+      : { status: 'unauthenticated' },
+  );
   const [pendingState, setPendingState] = useState<unknown>(null);
   const tokenClientRef = useRef<GisTokenClient | null>(null);
 
@@ -215,8 +241,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     });
   }, []);
 
-  // Initialise GIS token client when the GIS script is available
+  // Initialise GIS token client when the GIS script is available.
+  // Skipped in local review mode — no OAuth flow is needed.
   useEffect(() => {
+    if (isLocalReviewMode) return;
+
     const init = () => {
       if (!window.google?.accounts?.oauth2) return;
       tokenClientRef.current = window.google.accounts.oauth2.initTokenClient({
@@ -234,12 +263,18 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       const script = document.querySelector('script[src*="accounts.google.com/gsi/client"]');
       script?.addEventListener('load', init, { once: true });
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [handleTokenResponse, handleTokenError]);
+  // isLocalReviewMode is a compile-time constant derived from import.meta.env;
+  // it never changes between renders and is intentionally omitted from deps.
 
   const signIn = useCallback(() => {
+    if (isLocalReviewMode) return; // Local review mode — auth is pre-set; no OAuth needed.
     setAuth({ status: 'loading' });
     tokenClientRef.current?.requestAccessToken({ prompt: '' });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+  // isLocalReviewMode is a compile-time constant; omitted from deps intentionally.
 
   const signOut = useCallback(() => {
     if (auth.status === 'authenticated') {
