@@ -1,0 +1,48 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─── Base resets ────────────────────────────────────────────────────────────── */
+@layer base {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-canvas text-navy antialiased;
+    font-family: 'Inter', 'Aptos', system-ui, -apple-system, sans-serif;
+  }
+
+  /* Visible focus styles — never suppress outline */
+  :focus-visible {
+    @apply outline-2 outline-offset-2 outline-teal rounded;
+  }
+
+  /* Minimum touch target */
+  button,
+  [role="button"],
+  a,
+  input,
+  select,
+  textarea {
+    min-height: var(--touch-target-min, 44px);
+  }
+}
+
+/* ─── Utility layer ──────────────────────────────────────────────────────────── */
+@layer utilities {
+  /* Safe area utilities for notched devices */
+  .pb-safe {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+  .pt-safe {
+    padding-top: env(safe-area-inset-top);
+  }
+}

@@ -1,0 +1,13 @@
+# .dev.vars.example — template for local development secrets
+#
+# Copy this file to .dev.vars and populate with real values.
+# .dev.vars is in .gitignore and must NEVER be committed.
+# Never add real secrets to this example file.
+#
+# Cloudflare Workers reads .dev.vars automatically in local dev (wrangler dev).
+# In production, use: wrangler secret put GHL_TOKEN
+
+# GHL Private Integration Token
+# Obtain from: GHL sub-account Settings → Integrations → Private Integrations
+# Required for Phase 3 GHL sync. Not needed in Batch 1A.
+GHL_TOKEN=
