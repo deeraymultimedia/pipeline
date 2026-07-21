@@ -2,12 +2,12 @@
  * MobileDrawer — slide-in navigation drawer for mobile viewports.
  *
  * Accessibility contract:
- *   - role="dialog", aria-modal="true", aria-label="Navigation menu" when open
- *   - aria-hidden="true" when closed (slide offscreen)
+ *   - Conditionally mounted by parent when open (WCAG 2.1 SC 2.1.1 — keyboard access)
+ *   - role="dialog", aria-modal={true}, aria-label="Navigation menu"
  *   - Full keyboard focus trap (Tab / Shift+Tab)
  *   - Escape key closes
  *   - Backdrop click closes
- *   - Focus restored to triggerRef on close
+ *   - Focus restored to triggerRef on close (via useEffect cleanup)
  *   - motion-reduce:transition-none on slide transition
  *   - Close button: min-h-[44px] min-w-[44px]
  */
@@ -36,29 +36,28 @@ const FOCUSABLE =
   'a[href], button:not([disabled]), textarea, input, select, [tabindex]:not([tabindex="-1"])';
 
 interface MobileDrawerProps {
-  open: boolean;
   onClose: () => void;
   triggerRef: RefObject<HTMLButtonElement | null>;
 }
 
-export function MobileDrawer({ open, onClose, triggerRef }: MobileDrawerProps) {
+export function MobileDrawer({ onClose, triggerRef }: MobileDrawerProps) {
   const drawerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (open) {
-      document.body.style.overflow = 'hidden';
-      requestAnimationFrame(() => {
-        const first = drawerRef.current?.querySelector<HTMLElement>(FOCUSABLE);
-        first?.focus();
-      });
-    } else {
-      document.body.style.overflow = '';
-      triggerRef.current?.focus();
-    }
+    // Capture the trigger element now so the cleanup closure holds the same reference
+    // even if triggerRef.current changes before cleanup runs (satisfies hooks/exhaustive-deps).
+    const trigger = triggerRef.current;
+    document.body.style.overflow = 'hidden';
+    const frameId = requestAnimationFrame(() => {
+      const firstFocusable = drawerRef.current?.querySelector<HTMLElement>(FOCUSABLE);
+      firstFocusable?.focus();
+    });
     return () => {
+      cancelAnimationFrame(frameId);
       document.body.style.overflow = '';
+      trigger?.focus();
     };
-  }, [open, triggerRef]);
+  }, [triggerRef]);
 
   function handleKeyDown(e: KeyboardEvent<HTMLDivElement>) {
     if (e.key === 'Escape') {
@@ -77,19 +76,18 @@ export function MobileDrawer({ open, onClose, triggerRef }: MobileDrawerProps) {
     const first = focusable[0];
     const last = focusable[focusable.length - 1];
 
-    // Guard for noUncheckedIndexedAccess — length > 0 ensures both are defined
-    if (first === undefined || last === undefined) return;
+    if (!first || !last) {
+      return;
+    }
 
     if (e.shiftKey) {
       if (document.activeElement === first) {
         e.preventDefault();
         last.focus();
       }
-    } else {
-      if (document.activeElement === last) {
-        e.preventDefault();
-        first.focus();
-      }
+    } else if (document.activeElement === last) {
+      e.preventDefault();
+      first.focus();
     }
   }
 
@@ -97,9 +95,7 @@ export function MobileDrawer({ open, onClose, triggerRef }: MobileDrawerProps) {
     <>
       {/* Backdrop */}
       <div
-        className={`fixed inset-0 z-40 bg-navy/40 transition-opacity motion-reduce:transition-none ${
-          open ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
-        }`}
+        className="fixed inset-0 z-40 bg-navy/40 transition-opacity motion-reduce:transition-none opacity-100 pointer-events-auto"
         aria-hidden="true"
         onClick={onClose}
       />
@@ -107,16 +103,11 @@ export function MobileDrawer({ open, onClose, triggerRef }: MobileDrawerProps) {
       {/* Drawer panel */}
       <div
         ref={drawerRef}
-        {...(open && {
-          role: 'dialog' as const,
-          'aria-modal': true as const,
-          'aria-label': 'Navigation menu',
-        })}
-        {...(!open && { 'aria-hidden': true as const })}
+        role="dialog"
+        aria-modal={true}
+        aria-label="Navigation menu"
         onKeyDown={handleKeyDown}
-        className={`fixed top-0 left-0 bottom-0 z-50 w-full max-w-xs bg-navy flex flex-col shadow-popover transform transition-transform motion-reduce:transition-none ${
-          open ? 'translate-x-0' : '-translate-x-full'
-        }`}
+        className="fixed top-0 left-0 bottom-0 z-50 w-full max-w-xs bg-navy flex flex-col shadow-popover transform transition-transform motion-reduce:transition-none translate-x-0"
       >
         {/* Drawer header */}
         <div className="flex items-center justify-between px-5 h-14 border-b border-white/10">

@@ -116,9 +116,10 @@ describe('PipelineView', () => {
   });
 
   it('shows empty state when search matches nothing', () => {
-    renderInStore(<PipelineView />, '/?q=xyznonexistent');
-    // The empty state is rendered when filtered length is 0
-    // Since we can't set search params easily, just verify the component renders
+    renderInStore(<PipelineView />, '/?q=zzznomatch');
+    expect(
+      screen.getByRole('heading', { name: /no opportunities found/i }),
+    ).toBeInTheDocument();
     expect(screen.getByRole('searchbox')).toBeInTheDocument();
   });
 

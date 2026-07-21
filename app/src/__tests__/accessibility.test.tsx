@@ -195,3 +195,19 @@ describe('Mobile navigation labels', () => {
     expect(within(mobileNav).getByText('More')).toBeDefined();
   });
 });
+
+describe('Application shell landmarks', () => {
+  it('shell wrapper does not carry role="application"', () => {
+    const router = buildRouter('/');
+    render(<RouterProvider router={router} />);
+    expect(document.querySelector('[role="application"]')).toBeNull();
+  });
+
+  it('authenticated shell provides header, navigation, and main landmarks', () => {
+    const router = buildRouter('/');
+    render(<RouterProvider router={router} />);
+    expect(screen.getByRole('banner')).toBeDefined();
+    expect(screen.getAllByRole('navigation').length).toBeGreaterThanOrEqual(1);
+    expect(screen.getByRole('main')).toBeDefined();
+  });
+});

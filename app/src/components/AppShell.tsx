@@ -5,8 +5,10 @@
  *   - Wrapped authenticated shell in <DemoStoreProvider>
  *   - Added <MobileDrawer> with controlled drawerOpen state and menuButtonRef
  *   - Skip link rendered first (#main-content)
- *   - role="application" on root, id="main-content" on <main>
  *   - pb-20 lg:pb-0 on main for mobile bottom nav clearance
+ * Remediation (PR #1):
+ *   - role="application" removed from root div (WCAG)
+ *   - MobileDrawer conditionally mounted only when open (WCAG 2.1 SC 2.1.1)
  */
 
 import { useState, useRef } from 'react';
@@ -36,7 +38,7 @@ export function AppShell() {
 
   return (
     <DemoStoreProvider>
-      <div className="app-shell" role="application">
+      <div className="app-shell">
         {/* Skip link — rendered first in DOM for keyboard users */}
         <a
           href="#main-content"
@@ -60,12 +62,13 @@ export function AppShell() {
           </div>
         )}
 
-        {/* Mobile drawer */}
-        <MobileDrawer
-          open={drawerOpen}
-          onClose={() => setDrawerOpen(false)}
-          triggerRef={menuButtonRef}
-        />
+        {/* Mobile drawer — only mounted when open (WCAG 2.1 SC 2.1.1) */}
+        {drawerOpen && (
+          <MobileDrawer
+            onClose={() => setDrawerOpen(false)}
+            triggerRef={menuButtonRef}
+          />
+        )}
 
         {/* Desktop sidebar (hidden below lg breakpoint) */}
         <DesktopSidebar />

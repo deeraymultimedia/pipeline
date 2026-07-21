@@ -7,9 +7,11 @@
  *   - "Demo data" pill in header right area
  *   - User avatar (first letter of email) shown at lg breakpoint
  *   - Sign-out button with aria-label
+ * Remediation (PR #1):
+ *   - Removed unused _ref (useRef was imported and declared but unused)
  */
 
-import { useRef, type RefObject } from 'react';
+import { type RefObject } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { COMPANY } from '../constants/company';
@@ -49,7 +51,6 @@ interface AppHeaderProps {
 export function AppHeader({ onMenuOpen, menuButtonRef }: AppHeaderProps) {
   const { auth, signOut } = useAuth();
   const pageTitle = usePageTitle();
-  const _ref = useRef<HTMLButtonElement>(null);
 
   return (
     <header
@@ -115,7 +116,6 @@ export function AppHeader({ onMenuOpen, menuButtonRef }: AppHeaderProps) {
             </div>
 
             <button
-              ref={_ref}
               onClick={signOut}
               className="text-text-muted hover:text-navy text-xs px-3 py-1.5 rounded border border-border-subtle hover:border-navy transition-colors min-h-[36px]"
               aria-label="Sign out"
