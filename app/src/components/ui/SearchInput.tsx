@@ -36,10 +36,13 @@ export function SearchInput({
         {label}
       </label>
       <span
-        className="absolute left-3 text-text-muted pointer-events-none"
+        className="absolute left-3 text-text-muted pointer-events-none flex items-center"
         aria-hidden="true"
       >
-        🔍
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+          <circle cx="6.5" cy="6.5" r="4" stroke="currentColor" strokeWidth="1.5"/>
+          <path d="M10 10L13 13" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+        </svg>
       </span>
       <input
         id={id}

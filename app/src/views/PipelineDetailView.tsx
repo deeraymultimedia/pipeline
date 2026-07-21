@@ -37,16 +37,16 @@ function formatDateTime(iso: string): string {
   });
 }
 
-const ACTIVITY_ICONS: Record<string, string> = {
-  call:             '📞',
-  email:            '📧',
-  meeting:          '🤝',
-  note:             '📝',
-  proposal_sent:    '📄',
-  contract_sent:    '📑',
-  payment_received: '💷',
-  stage_change:     '🔄',
-  system:           '⚙️',
+const ACTIVITY_INITIALS: Record<string, string> = {
+  call:             'C',
+  email:            'E',
+  meeting:          'M',
+  note:             'N',
+  proposal_sent:    'P',
+  contract_sent:    'CT',
+  payment_received: '£',
+  stage_change:     'S',
+  system:           'SY',
 };
 
 interface EditValues {
@@ -105,7 +105,11 @@ export function PipelineDetailView() {
       <nav aria-label="Breadcrumb" className="mb-4">
         <ol className="flex items-center gap-2 text-sm text-text-muted">
           <li><Link to="/pipeline" className="hover:text-teal transition-colors">Pipeline</Link></li>
-          <li aria-hidden="true">/</li>
+          <li aria-hidden="true">
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true" className="text-text-muted">
+              <path d="M4.5 2.5L7.5 6L4.5 9.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+          </li>
           <li className="text-navy font-medium truncate max-w-[200px]">{opp.client_name}</li>
         </ol>
       </nav>
@@ -177,10 +181,10 @@ export function PipelineDetailView() {
                       <div className="absolute left-4 top-8 bottom-0 w-px bg-border-subtle" aria-hidden="true" />
                     )}
                     <span
-                      className="flex-shrink-0 w-8 h-8 rounded-full bg-teal-light border border-teal/20 flex items-center justify-center text-sm"
+                      className="flex-shrink-0 w-8 h-8 rounded-full bg-teal-light border border-teal/20 flex items-center justify-center text-xs font-semibold text-teal"
                       aria-hidden="true"
                     >
-                      {ACTIVITY_ICONS[act.type] ?? '📌'}
+                      {ACTIVITY_INITIALS[act.type] ?? '?'}
                     </span>
                     <div className="min-w-0">
                       <p className="text-sm font-medium text-navy capitalize">
@@ -200,8 +204,11 @@ export function PipelineDetailView() {
           {/* Documents */}
           <section aria-labelledby="docs-heading" className="bg-white rounded-xl border border-border-subtle shadow-card p-5">
             <h2 id="docs-heading" className="font-semibold text-navy mb-3">Documents</h2>
-            <div className="mb-4 flex items-start gap-2 p-3 bg-amber-50 border border-amber-200 rounded-lg text-sm text-amber-800">
-              <span aria-hidden="true">⚠</span>
+            <div className="mb-4 flex items-start gap-2 p-3 bg-teal-light border border-teal/20 rounded-lg text-sm text-navy">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true" className="flex-shrink-0 mt-0.5 text-teal">
+                <circle cx="8" cy="8" r="6.5" stroke="currentColor" strokeWidth="1.5"/>
+                <path d="M8 7.5v3M8 5.5h.01" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+              </svg>
               <p>Document integration coming in a later batch. Files listed below are demo placeholders — Drive access is not yet connected.</p>
             </div>
             {documents.length === 0 ? (
