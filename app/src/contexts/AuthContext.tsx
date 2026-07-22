@@ -115,6 +115,10 @@ const SHEETS_SCOPE = 'https://www.googleapis.com/auth/spreadsheets';
 // drive.file scope is NOT requested in Batch 1A.
 // Add here when Phase 2 document system is authorised.
 
+// Identity scopes (openid + email) are required so the tokeninfo endpoint
+// reliably returns info.email for authorised-account validation.
+const GOOGLE_SCOPES = ['openid', 'email', SHEETS_SCOPE].join(' ');
+
 // ─── Provider ─────────────────────────────────────────────────────────────────
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
@@ -250,7 +254,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       if (!window.google?.accounts?.oauth2) return;
       tokenClientRef.current = window.google.accounts.oauth2.initTokenClient({
         client_id: GOOGLE_CLIENT_ID,
-        scope: SHEETS_SCOPE,
+        scope: GOOGLE_SCOPES,
         callback: handleTokenResponse,
         error_callback: handleTokenError,
       });
