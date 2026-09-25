@@ -10,7 +10,7 @@ The production-ready version of the homepage chosen on 25 September 2026: the Fr
 |------|------------|
 | `index.html` | The page. One responsive layout for desktop, tablet and phone |
 | `www/css/site.css` | All styles. Brand tokens are CSS variables at the top |
-| `www/js/site.js` | Hand-off to the app (see below), video sync, pause button, mobile menu, scroll reveals |
+| `www/js/site.js` | Hand-off to the app (see below), video sync, pause button, mobile menu, scroll reveals, and smooth scrolling (eased wheel and trackpad scrolling on desktop, and in-page links that ease to their section below the sticky header; touch and reduced-motion visitors keep native scrolling) |
 | `www/fonts/` | Fraunces and Figtree (SIL Open Font License 1.1), copied from the app's `@expo-google-fonts` packages |
 | `www/media/` | Hero video (`hero-day*.webm/mp4`, 1080p for desktop, 540p for phones via `<source media>`), poster, photos, Google Play badge |
 

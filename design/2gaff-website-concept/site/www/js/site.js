@@ -102,7 +102,70 @@
     reveals.forEach(function (el) { io.observe(el); });
   }
 
-  // 5. Footer year.
+  // 5. Smooth scrolling. Mouse wheels and trackpads glide to a stop, and links within the page
+  //    ease to their section below the sticky header. Touch screens keep native scrolling, and
+  //    visitors who ask for less motion get ordinary scrolling.
+  var header = document.querySelector('.site-header');
+  var headerOffset = function () { return (header ? header.offsetHeight : 0) + 16; };
+  var maxScroll = function () { return document.documentElement.scrollHeight - window.innerHeight; };
+  var clamp = function (n) { return Math.max(0, Math.min(maxScroll(), n)); };
+  var jump = function (y) { window.scrollTo({ top: y, left: 0, behavior: 'instant' }); };
+
+  if (!reduce) {
+    document.documentElement.style.scrollBehavior = 'auto';
+    var target = window.scrollY, current = window.scrollY, frame = null, glide = null;
+
+    var step = function () {
+      current += (target - current) * 0.11;
+      if (Math.abs(target - current) < 0.5) { current = target; jump(current); frame = null; return; }
+      jump(current);
+      frame = window.requestAnimationFrame(step);
+    };
+    var start = function () { if (!frame) frame = window.requestAnimationFrame(step); };
+
+    if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+      window.addEventListener('wheel', function (e) {
+        if (e.ctrlKey || e.defaultPrevented || Math.abs(e.deltaX) > Math.abs(e.deltaY)) return;
+        e.preventDefault();
+        if (glide) { window.cancelAnimationFrame(glide); glide = null; }
+        if (!frame) { target = current = window.scrollY; }
+        var d = e.deltaMode === 1 ? e.deltaY * 40 : e.deltaMode === 2 ? e.deltaY * window.innerHeight : e.deltaY;
+        target = clamp(target + d);
+        start();
+      }, { passive: false });
+    }
+    // Keyboard, scrollbar and find-in-page scrolling take over from any glide in progress.
+    window.addEventListener('scroll', function () { if (!frame && !glide) target = current = window.scrollY; }, { passive: true });
+
+    // Links within the page: ease over about 0.9 s, then move focus for keyboard users.
+    var ease = function (t) { return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2; };
+    document.addEventListener('click', function (e) {
+      var link = e.target.closest('a[href^="#"]');
+      if (!link || e.metaKey || e.ctrlKey || e.shiftKey) return;
+      var id = link.getAttribute('href').slice(1);
+      var el = id && document.getElementById(id);
+      if (!el) return;
+      e.preventDefault();
+      if (frame) { window.cancelAnimationFrame(frame); frame = null; }
+      if (glide) window.cancelAnimationFrame(glide);
+      var from = window.scrollY;
+      var to = clamp(el.getBoundingClientRect().top + from - (id === 'main' ? 0 : headerOffset()));
+      var duration = Math.min(1100, 450 + Math.abs(to - from) * 0.25), t0 = null;
+      var run = function (now) {
+        if (t0 === null) t0 = now;
+        var p = Math.min(1, (now - t0) / duration);
+        jump(from + (to - from) * ease(p));
+        if (p < 1) { glide = window.requestAnimationFrame(run); return; }
+        glide = null; target = current = to;
+        if (history.replaceState) history.replaceState(null, '', '#' + id);
+        el.setAttribute('tabindex', '-1');
+        el.focus({ preventScroll: true });
+      };
+      glide = window.requestAnimationFrame(run);
+    });
+  }
+
+  // 6. Footer year.
   var y = document.getElementById('year');
   if (y) y.textContent = String(new Date().getFullYear());
 })();

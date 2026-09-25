@@ -169,6 +169,8 @@ h2 em { font-weight: 300; }
 
 /* Sections */
 section { position: relative; }
+section[id] { scroll-margin-top: 96px; }
+[tabindex="-1"]:focus { outline: none; }
 .section { padding: clamp(64px, 8vw, 112px) 0; }
 .section-head { display: flex; justify-content: space-between; align-items: flex-end; gap: 32px; flex-wrap: wrap; }
 .section-head .lede { max-width: 440px; }
