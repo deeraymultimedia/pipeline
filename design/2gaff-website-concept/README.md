@@ -11,7 +11,7 @@ Live canvas (private until shared): https://claude.ai/artifact/K7dGsV3GPRdpwz8h5
 | `preview/desktop.html` | Desktop homepage (1440 px), opens in any browser |
 | `preview/mobile.html` | Mobile homepage (390 px), opens in any browser |
 | `preview/motion.html` | Earlier photo-motion storyboard, kept for reference (the hero now uses `video/`) |
-| `video/` | Hero video: `hero-day.webm` and `hero-day.mp4` (22.5 s, 1280×720, silent, about 3 MB each) and `hero-day-poster.jpg` |
+| `video/` | Hero video, 22.5 s and silent: `hero-day.webm` / `hero-day.mp4` for desktop (1280×720, about 10–12 MB), `hero-day-540.webm` / `hero-day-540.mp4` for mobile (960×540, about 4.5 MB), and `hero-day-poster.jpg` |
 | `canvas/` | Source files for the claude.ai Design canvas (`*.dc.html` + `canvas.json`). Not updated for the video hero |
 | `images/` | 2Gaff photography and the official Google Play badge, taken from 2gaff.com |
 
@@ -53,6 +53,7 @@ Figma's Claude connector is not available in cloud Claude Code sessions. Options
 - The desk image was edited in Google Flow (Nano Banana 2) so the man matches the entrance image; the entrance image was cropped to 16:9.
 - Three 8-second transitions were generated in Google Flow with Veo 3.1 Fast, each using one still as its first frame and the next as its last: entrance → desk, desk → meeting room, meeting room → rooftop. Generated on the Google AI Pro plan's included credits.
 - The clips were joined with 0.25-second cross-fades, the audio removed, and the end cross-faded into the start so the loop has no visible jump.
+- Everything is encoded in a single pass from Flow's 720p originals at close to their own bitrate (about 4 Mbps for desktop), so the only generation loss is Flow's own. An earlier 1 Mbps encode looked visibly soft.
 
 ## Open questions
 
