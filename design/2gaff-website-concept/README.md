@@ -11,7 +11,7 @@ Live canvas (private until shared): https://claude.ai/artifact/K7dGsV3GPRdpwz8h5
 | `preview/desktop.html` | Desktop homepage (1440 px), opens in any browser |
 | `preview/mobile.html` | Mobile homepage (390 px), opens in any browser |
 | `preview/motion.html` | Earlier photo-motion storyboard, kept for reference (the hero now uses `video/`) |
-| `video/` | Hero video, 22.5 s and silent: `hero-day.webm` / `hero-day.mp4` for desktop (1280×720, about 10–12 MB), `hero-day-540.webm` / `hero-day-540.mp4` for mobile (960×540, about 4.5 MB), and `hero-day-poster.jpg` |
+| `video/` | Hero video, 22.5 s and silent: `hero-day.webm` / `hero-day.mp4` for desktop (1920×1080, 12.8 MB / 14.4 MB), `hero-day-540.webm` / `hero-day-540.mp4` for mobile (960×540, about 5.5 MB), and `hero-day-poster.jpg` |
 | `canvas/` | Source files for the claude.ai Design canvas (`*.dc.html` + `canvas.json`). Not updated for the video hero |
 | `images/` | 2Gaff photography and the official Google Play badge, taken from 2gaff.com |
 
@@ -53,10 +53,10 @@ Figma's Claude connector is not available in cloud Claude Code sessions. Options
 - The desk image was edited in Google Flow (Nano Banana 2) so the man matches the entrance image; the entrance image was cropped to 16:9.
 - Three 8-second transitions were generated in Google Flow with Veo 3.1 Fast, each using one still as its first frame and the next as its last: entrance → desk, desk → meeting room, meeting room → rooftop. Generated on the Google AI Pro plan's included credits.
 - The clips were joined with 0.25-second cross-fades, the audio removed, and the end cross-faded into the start so the loop has no visible jump.
-- Everything is encoded in a single pass from Flow's 720p originals at close to their own bitrate (about 4 Mbps for desktop), so the only generation loss is Flow's own. An earlier 1 Mbps encode looked visibly soft.
+- The three clips are Flow's free 1080p upscales (Download → 1080p), which are much sharper than the 720p originals. They were joined and encoded once from a near-lossless master: about 4.5–5 Mbps for desktop and 2 Mbps for the mobile version. An earlier 1 Mbps encode of the 720p clips looked visibly soft.
 
 ## Open questions
 
+- The footer credit reads "App and Website Built and Powered By Deeray Multimedia" in the preview pages; the `canvas/` copies still show the old wording.
 - The rooftop and meeting-room messages are sample content, like the rest of the copy in the phone screens.
-- Footer credit "Built by Deeray Multimedia Ltd": confirm it should appear.
 - "Alder Court", "Residents' lounge" and the dates in the phone screens are sample content.
