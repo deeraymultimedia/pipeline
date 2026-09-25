@@ -71,7 +71,10 @@
     } else {
       var userPaused = false;
       var play = function () { if (!userPaused) { var p = v.play(); if (p && p.catch) p.catch(function () {}); } };
-      (function tick() { render(v.currentTime || 0); window.requestAnimationFrame(tick); })();
+      // Redraw every frame only while the video plays; paused or hidden, the events below suffice.
+      var ticking = null;
+      var tick = function () { render(v.currentTime || 0); ticking = v.paused ? null : window.requestAnimationFrame(tick); };
+      v.addEventListener('play', function () { if (!ticking) ticking = window.requestAnimationFrame(tick); });
       ['timeupdate', 'seeked', 'loadedmetadata'].forEach(function (ev) {
         v.addEventListener(ev, function () { render(v.currentTime || 0); });
       });
@@ -91,6 +94,14 @@
     }
   }
 
+  // 4a. The moving strips and stickers only animate while they are on screen.
+  if ('IntersectionObserver' in window) {
+    var movers = new IntersectionObserver(function (es) {
+      es.forEach(function (e) { e.target.classList.toggle('paused', !e.isIntersecting); });
+    });
+    [].slice.call(document.querySelectorAll('.marquee, .hero, #everyday, #teams, .closing')).forEach(function (el) { movers.observe(el); });
+  }
+
   // 4. Sections ease in as they scroll into view.
   var reveals = [].slice.call(document.querySelectorAll('.reveal'));
   if (reduce || !('IntersectionObserver' in window)) {
@@ -102,7 +113,7 @@
     reveals.forEach(function (el) { io.observe(el); });
   }
 
-  // 5. Smooth scrolling. Mouse wheels and trackpads glide to a stop, and links within the page
+  // 5. Smooth scrolling. Mouse wheels glide to a stop (trackpads keep their native glide), and links within the page
   //    ease to their section below the sticky header. Touch screens keep native scrolling, and
   //    visitors who ask for less motion get ordinary scrolling.
   var header = document.querySelector('.site-header');
@@ -116,7 +127,7 @@
     var target = window.scrollY, current = window.scrollY, frame = null, glide = null;
 
     var step = function () {
-      current += (target - current) * 0.11;
+      current += (target - current) * 0.16;
       if (Math.abs(target - current) < 0.5) { current = target; jump(current); frame = null; return; }
       jump(current);
       frame = window.requestAnimationFrame(step);
@@ -126,6 +137,8 @@
     if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
       window.addEventListener('wheel', function (e) {
         if (e.ctrlKey || e.defaultPrevented || Math.abs(e.deltaX) > Math.abs(e.deltaY)) return;
+        // Trackpads send small pixel steps and already glide natively; only smooth mouse wheels.
+        if (e.deltaMode === 0 && Math.abs(e.deltaY) < 50 && !frame) return;
         e.preventDefault();
         if (glide) { window.cancelAnimationFrame(glide); glide = null; }
         if (!frame) { target = current = window.scrollY; }

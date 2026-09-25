@@ -24,6 +24,20 @@ cd design/2gaff-website-concept/site && python3 -m http.server 8767
 
 Then open http://127.0.0.1:8767/. The buttons point at `/app`, which doesn't exist in this preview.
 
+A phone-test copy is deployed to a Cloudflare Pages **preview** branch, not production: https://homepage-preview.2gaff-com.pages.dev (project `2gaff-com`, branch `homepage-preview`). It serves the live `_headers` plus `X-Robots-Tag: noindex`. The owner confirmed on 25 Sep 2026 that it scrolls smoothly on their phone.
+
+## Performance notes
+
+These keep it smooth on phones:
+
+- The header is solid rather than frosted: a backdrop blur over moving video costs a redraw every frame.
+- The video frame is its own layer (`transform: translateZ(0)`, `contain: paint`).
+- Phones get the 540p MP4, which iPhones decode in hardware.
+- The strips and stickers pause off screen.
+- The per-frame script runs only while the video plays.
+- Message cards fade out before the next fades in.
+- CSS and JS links carry `?v=` so updates aren't hidden by caches. Bump it on every change.
+
 ## How it replaces the current homepage
 
 Today www.2gaff.com is the Expo web export of the app (Cloudflare Pages project `2gaff-com`), so the signed-out app is the homepage. The plan:
