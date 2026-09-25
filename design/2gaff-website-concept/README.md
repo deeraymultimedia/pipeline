@@ -1,6 +1,6 @@
 # 2Gaff website concept: "The Front Door"
 
-Visual mockup for a redesigned 2gaff.com homepage (desktop and mobile), with a filmed hero video and the earlier photo-motion storyboard. **Mockup only.** Nothing here has been built into the live site yet: the build waits for approval of this direction.
+Visual mockup for a redesigned 2gaff.com homepage (desktop and mobile), with a filmed hero video and the earlier photo-motion storyboard. The chosen fun edition is built in `site/` and waits to be published after the app store reviews. `preview/` and `canvas/` are the earlier calmer mockups.
 
 Live canvas (private until shared): https://claude.ai/artifact/K7dGsV3GPRdpwz8h5BvVoh
 
@@ -8,6 +8,7 @@ Live canvas (private until shared): https://claude.ai/artifact/K7dGsV3GPRdpwz8h5
 
 | Path | What it is |
 |------|------------|
+| `site/` | **The chosen homepage** (fun edition, responsive, production-ready). Publish after the app store reviews. See `site/README.md` |
 | `preview/desktop.html` | Desktop homepage (1440 px), opens in any browser |
 | `preview/mobile.html` | Mobile homepage (390 px), opens in any browser |
 | `preview/motion.html` | Earlier photo-motion storyboard, kept for reference (the hero now uses `video/`) |
