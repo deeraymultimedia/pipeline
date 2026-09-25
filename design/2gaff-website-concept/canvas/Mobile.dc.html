@@ -1,0 +1,199 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<title>2Gaff homepage, mobile</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..600&amp;family=Figtree:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#FAF7F2}
+a{color:#0F3D32}a:hover{color:#0A2A22}
+.scene{position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;opacity:0;transform-origin:55% 35%;animation:scene 18s linear infinite both,drift 18s ease-out infinite both}
+.s1{animation-delay:-1s,-1s}.s2{animation-delay:5s,5s}.s3{animation-delay:11s,11s}
+@keyframes scene{0%{opacity:0}5%{opacity:1}33.4%{opacity:1}40%{opacity:0}100%{opacity:0}}
+@keyframes drift{0%{transform:scale(1.02)}40%{transform:scale(1.1) translate(-1.2%,-0.8%)}100%{transform:scale(1.1) translate(-1.2%,-0.8%)}}
+.chip{position:absolute;opacity:0;animation:chip 18s ease infinite both}
+.c1{animation-delay:-1s}.c2{animation-delay:5s}.c3{animation-delay:11s}
+@keyframes chip{0%,9%{opacity:0;transform:translateY(12px)}13%{opacity:1;transform:translateY(0)}31%{opacity:1;transform:translateY(0)}35%{opacity:0;transform:translateY(-8px)}100%{opacity:0;transform:translateY(-8px)}}
+.fill{display:block;height:2px;background:#0F3D32;transform-origin:left center;transform:scaleX(0);animation:fill 18s linear infinite both}
+.f1{animation-delay:-1s}.f2{animation-delay:5s}.f3{animation-delay:11s}
+@keyframes fill{0%{transform:scaleX(0);opacity:1}33.4%{transform:scaleX(1);opacity:1}36%{transform:scaleX(1);opacity:0}100%{transform:scaleX(1);opacity:0}}
+.lab{color:#6D6458;animation:lab 18s linear infinite both}
+.l1{animation-delay:-1s}.l2{animation-delay:5s}.l3{animation-delay:11s}
+@keyframes lab{0%{color:#6D6458}3%{color:#0F3D32}33.4%{color:#0F3D32}36%{color:#6D6458}100%{color:#6D6458}}
+.paused .scene,.paused .chip,.paused .fill,.paused .lab{animation-play-state:paused}
+@media (prefers-reduced-motion: reduce){.scene,.chip,.fill,.lab{animation:none}.s1,.c1{opacity:1}.f1{transform:scaleX(1)}}
+</style>
+</helmet>
+<div style="width: 390px; height: 5560px; display: flex; flex-direction: column; background: #FAF7F2; font-family: 'Figtree', system-ui, sans-serif; color: #2D2D2D; overflow: hidden">
+
+<header style="height: 64px; flex-shrink: 0; display: flex; align-items: center; justify-content: space-between; padding: 0 12px 0 20px; border-bottom: 1px solid #E0D5C4; box-sizing: border-box">
+<a href="#" aria-label="2Gaff home" style="display: flex; align-items: center; gap: 8px; text-decoration: none">
+<svg width="37" height="24" viewBox="0 0 308 200" aria-hidden="true"><path fill="#0F3D32" d="M57 193H8Q0 193 0 185V91Q0 85 5 81L99 3Q105 -1 111 4L191 69Q197 74 197 82V185Q197 193 189 193H138Q124 193 124 183Q123 172 131 157Q133 153 137 157L148 165H169V87L105 35L29 98V165H54Q57 165 57 168Z"></path><path fill="#D4AF7C" d="M251 193H300Q308 193 308 185V91Q308 85 303 81L212 4Q206 -1 200 4L123 67Q118 71 118 78V140Q118 148 126 152Q132 156 138 152Q146 148 146 140V86L206 35L279 98V165H252Q249 165 249 168V191Q249 193 251 193Z"></path><rect x="61" y="111" width="15" height="15" rx="1" fill="#0F3D32"></rect><rect x="81" y="111" width="15" height="15" rx="1" fill="#0F3D32"></rect><rect x="61" y="131" width="15" height="15" rx="1" fill="#0F3D32"></rect><rect x="81" y="131" width="15" height="15" rx="1" fill="#0F3D32"></rect><rect x="216" y="111" width="15" height="15" rx="1" fill="#D4AF7C"></rect><rect x="236" y="111" width="15" height="15" rx="1" fill="#D4AF7C"></rect><rect x="216" y="131" width="15" height="15" rx="1" fill="#D4AF7C"></rect><rect x="236" y="131" width="15" height="15" rx="1" fill="#D4AF7C"></rect></svg>
+<span style="font-size: 23px; font-weight: 700; letter-spacing: -1px; color: #0F3D32">2Gaff</span>
+</a>
+<div style="display: flex; align-items: center; gap: 4px">
+<a href="#" style="display: flex; align-items: center; height: 44px; padding: 0 12px; font-size: 15px; font-weight: 600; color: #0F3D32; text-decoration: none">Sign in</a>
+<button type="button" aria-label="Open menu" style="width: 44px; height: 44px; border: 1px solid #E0D5C4; border-radius: 999px; background: transparent; color: #0F3D32; display: flex; align-items: center; justify-content: center; padding: 0"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M4 8h16M4 16h16"></path></svg></button>
+</div>
+</header>
+
+<section class="{{heroClass}}" style="padding: 16px 20px 48px 20px; flex-shrink: 0; display: flex; flex-direction: column">
+<div style="position: relative; width: 350px; height: 330px">
+<svg width="336" height="290" viewBox="0 0 336 290" aria-hidden="true" style="position: absolute; left: 14px; top: 0"><polygon points="161,1 321,101 321,289 1,289 1,101" fill="none" stroke="#D4AF7C" stroke-width="1.5"></polygon></svg>
+<div style="position: absolute; left: 0; top: 14px; width: 322px; height: 280px; overflow: hidden; clip-path: polygon(50% 0, 100% 100px, 100% 100%, 0 100%, 0 100px); background: #E8DFD0">
+<img class="scene s1" src="/_blob/473caff33e2a1774cd181cad24461064" alt="Two residents leaving their building, greeted by the concierge" style="object-position: 50% 26%">
+<img class="scene s2" src="/_blob/2ad6cd802c9f72fe37a493b80ea58ec7" alt="A resident with shopping and her dog chatting to the concierge" style="object-position: 50% 32%">
+<img class="scene s3" src="/_blob/f4e06f19452140d43b8c1dc1b6b42c53" alt="Residents walking through the courtyard at golden hour" style="object-position: 50% 34%">
+</div>
+<div class="chip c1" style="left: 58px; top: 206px; width: 292px; display: flex; gap: 10px; align-items: center; padding: 11px 13px; background: #FBF8F2; border: 1px solid #E0D5C4; border-radius: 14px; box-shadow: 0 18px 34px -18px rgba(15,61,50,0.5); box-sizing: border-box">
+<span style="width: 32px; height: 32px; flex-shrink: 0; border-radius: 999px; background: #0F3D32; color: #D4AF7C; display: flex; align-items: center; justify-content: center"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 8a6 6 0 1 1 12 0c0 7 3 9 3 9H3s3-2 3-9"></path><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"></path></svg></span>
+<div style="display: flex; flex-direction: column; gap: 2px"><span style="font-size: 10px; font-weight: 600; letter-spacing: 1.4px; color: #7F5B34">NOTICE · PROPERTY TEAM</span><span style="font-size: 13px; font-weight: 500; line-height: 1.3">Window cleaning, east side, Thursday 9am.</span></div>
+</div>
+<div class="chip c2" style="left: 58px; top: 206px; width: 292px; display: flex; gap: 10px; align-items: center; padding: 11px 13px; background: #FBF8F2; border: 1px solid #E0D5C4; border-radius: 14px; box-shadow: 0 18px 34px -18px rgba(15,61,50,0.5); box-sizing: border-box">
+<span style="width: 32px; height: 32px; flex-shrink: 0; border-radius: 999px; background: #0F3D32; color: #D4AF7C; display: flex; align-items: center; justify-content: center"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"></rect><path d="M16 2v4M8 2v4M3 10h18"></path></svg></span>
+<div style="display: flex; flex-direction: column; gap: 2px"><span style="font-size: 10px; font-weight: 600; letter-spacing: 1.4px; color: #7F5B34">EVENT · FRIDAY 7PM</span><span style="font-size: 13px; font-weight: 500; line-height: 1.3">Courtyard supper. 14 neighbours going.</span></div>
+</div>
+<div class="chip c3" style="left: 58px; top: 206px; width: 292px; display: flex; gap: 10px; align-items: center; padding: 11px 13px; background: #FBF8F2; border: 1px solid #E0D5C4; border-radius: 14px; box-shadow: 0 18px 34px -18px rgba(15,61,50,0.5); box-sizing: border-box">
+<span style="width: 32px; height: 32px; flex-shrink: 0; border-radius: 999px; background: #0F3D32; color: #D4AF7C; display: flex; align-items: center; justify-content: center"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="m8.5 12 2.5 2.5 4.5-5"></path></svg></span>
+<div style="display: flex; flex-direction: column; gap: 2px"><span style="font-size: 10px; font-weight: 600; letter-spacing: 1.4px; color: #7F5B34">BOOKING CONFIRMED</span><span style="font-size: 13px; font-weight: 500; line-height: 1.3">Residents’ lounge, Saturday at 2pm.</span></div>
+</div>
+<div style="position: absolute; left: 0; top: 308px; width: 322px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px">
+<div style="display: flex; flex-direction: column; gap: 6px"><span class="lab l1" style="font-size: 10px; font-weight: 600; letter-spacing: 1.2px">NOTICES</span><span style="display: block; height: 2px; background: #E0D5C4"><span class="fill f1"></span></span></div>
+<div style="display: flex; flex-direction: column; gap: 6px"><span class="lab l2" style="font-size: 10px; font-weight: 600; letter-spacing: 1.2px">EVENTS</span><span style="display: block; height: 2px; background: #E0D5C4"><span class="fill f2"></span></span></div>
+<div style="display: flex; flex-direction: column; gap: 6px"><span class="lab l3" style="font-size: 10px; font-weight: 600; letter-spacing: 1.2px">BOOKINGS</span><span style="display: block; height: 2px; background: #E0D5C4"><span class="fill f3"></span></span></div>
+</div>
+</div>
+<div style="display: flex; align-items: center; gap: 10px; margin-top: 26px; font-size: 11px; font-weight: 600; letter-spacing: 2px; color: #7F5B34"><span style="width: 24px; height: 1px; background: #D4AF7C"></span>LIFE AROUND YOUR BUILDING</div>
+<h1 style="margin: 12px 0 0 0; font-family: 'Fraunces', Georgia, serif; font-weight: 350; font-size: 44px; line-height: 1.02; letter-spacing: -1.2px; color: #0F3D32">Your building, a little <em style="font-weight: 300">closer.</em></h1>
+<p style="margin: 14px 0 0 0; font-size: 16px; line-height: 1.55; color: #4A4A45">Notices, events, bookings, private reports and your property team, all in one welcoming place.</p>
+<div style="display: flex; gap: 10px; margin-top: 22px">
+<a href="#" style="flex: 1; display: inline-flex; align-items: center; justify-content: center; gap: 8px; height: 52px; background: #0F3D32; color: #FAF7F2; border-radius: 999px; font-size: 15px; font-weight: 600; text-decoration: none">Get started<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a>
+<a href="#" style="flex: 1; display: inline-flex; align-items: center; justify-content: center; height: 52px; border: 1.5px solid #0F3D32; color: #0F3D32; border-radius: 999px; font-size: 15px; font-weight: 600; text-decoration: none; box-sizing: border-box">Sign in</a>
+</div>
+<div style="display: flex; align-items: center; gap: 14px; margin-top: 16px">
+<a href="#" aria-label="Get it on Google Play" style="display: flex; flex-shrink: 0"><img src="/_blob/8b700f226e1d95d0cc80ca667db3ac84" alt="Get it on Google Play" style="height: 46px; width: auto; display: block"></a>
+<span style="font-size: 13px; line-height: 1.4; color: #6D6458">Or use 2Gaff in any browser.</span>
+</div>
+<p style="margin: 24px 0 0 0; padding-top: 18px; border-top: 1px solid #E0D5C4; font-size: 13px; line-height: 1.5; color: #6D6458"><strong style="color: #2D2D2D; font-weight: 600">New here?</strong> Start with the joining link or building code from your property team. <strong style="color: #2D2D2D; font-weight: 600">Returning?</strong> Sign in with the account you joined with.</p>
+</section>
+
+<section style="padding: 64px 20px; border-top: 1px solid #E0D5C4; flex-shrink: 0; display: flex; flex-direction: column; gap: 16px">
+<div style="display: flex; align-items: center; gap: 10px; font-size: 11px; font-weight: 600; letter-spacing: 2px; color: #7F5B34"><span style="width: 24px; height: 1px; background: #D4AF7C"></span>EVERYDAY ESSENTIALS</div>
+<h2 style="margin: 0; font-family: 'Fraunces', Georgia, serif; font-weight: 350; font-size: 34px; line-height: 1.08; letter-spacing: -0.8px; color: #0F3D32">Everything in its place. <em style="font-weight: 300">Everyone in the loop.</em></h2>
+<ol style="list-style: none; margin: 16px 0 0 0; padding: 0; border-bottom: 1px solid #E0D5C4">
+<li style="display: flex; align-items: center; gap: 14px; min-height: 72px; border-top: 1px solid #E0D5C4"><span style="font-family: 'Fraunces', Georgia, serif; font-style: italic; font-size: 16px; color: #7F5B34; width: 24px">01</span><span style="flex-grow: 1; font-family: 'Fraunces', Georgia, serif; font-size: 22px; color: #0F3D32">Notices &amp; events</span><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0F3D32" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg></li>
+<li style="border-top: 1px solid #0F3D32; background: #EAF0E9; padding: 0 14px 18px 14px; margin: 0 -14px">
+<div style="display: flex; align-items: center; gap: 14px; min-height: 72px"><span style="font-family: 'Fraunces', Georgia, serif; font-style: italic; font-size: 16px; color: #0F3D32; width: 24px">02</span><span style="flex-grow: 1; font-family: 'Fraunces', Georgia, serif; font-size: 22px; color: #0F3D32">Shared facilities</span><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0F3D32" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14"></path></svg></div>
+<p style="margin: 0 0 16px 38px; font-size: 15px; line-height: 1.5; color: #4A4A45">Book the gym, lounge or guest suite in a few taps, with capacity and house guidance shown before you confirm.</p>
+<div style="background: #FBF8F2; border: 1px solid #E0D5C4; border-radius: 16px; padding: 16px; display: flex; flex-direction: column; gap: 12px">
+<div style="display: flex; justify-content: space-between; align-items: baseline"><span style="font-family: 'Fraunces', Georgia, serif; font-size: 20px; color: #0F3D32">Residents’ lounge</span><span style="font-size: 12px; color: #6D6458">Up to 12</span></div>
+<div style="display: flex; gap: 8px">
+<span style="width: 54px; height: 54px; border-radius: 12px; background: #0F3D32; color: #FAF7F2; display: flex; flex-direction: column; align-items: center; justify-content: center; font-size: 10px"><span>Sat</span><span style="font-size: 16px; font-weight: 700">26</span></span>
+<span style="width: 54px; height: 54px; border-radius: 12px; border: 1px solid #E0D5C4; box-sizing: border-box; display: flex; flex-direction: column; align-items: center; justify-content: center; font-size: 10px"><span>Sun</span><span style="font-size: 16px; font-weight: 700">27</span></span>
+<span style="width: 54px; height: 54px; border-radius: 12px; border: 1px solid #E0D5C4; box-sizing: border-box; display: flex; flex-direction: column; align-items: center; justify-content: center; font-size: 10px"><span>Mon</span><span style="font-size: 16px; font-weight: 700">28</span></span>
+<span style="width: 54px; height: 54px; border-radius: 12px; border: 1px solid #E0D5C4; box-sizing: border-box; display: flex; flex-direction: column; align-items: center; justify-content: center; font-size: 10px"><span>Tue</span><span style="font-size: 16px; font-weight: 700">29</span></span>
+<span style="width: 54px; height: 54px; border-radius: 12px; border: 1px solid #E0D5C4; box-sizing: border-box; display: flex; flex-direction: column; align-items: center; justify-content: center; font-size: 10px"><span>Wed</span><span style="font-size: 16px; font-weight: 700">30</span></span>
+</div>
+<div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; font-size: 13px; font-weight: 600">
+<span style="height: 38px; border-radius: 10px; border: 1px solid #E0D5C4; display: flex; align-items: center; justify-content: center">12:00</span>
+<span style="height: 38px; border-radius: 10px; border: 1.5px solid #0F3D32; background: #EAF0E9; color: #0F3D32; display: flex; align-items: center; justify-content: center">14:00</span>
+<span style="height: 38px; border-radius: 10px; border: 1px solid #E0D5C4; display: flex; align-items: center; justify-content: center">16:00</span>
+</div>
+<span style="height: 46px; border-radius: 999px; background: #0F3D32; color: #FAF7F2; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 600">Confirm booking</span>
+</div>
+</li>
+<li style="display: flex; align-items: center; gap: 14px; min-height: 72px; border-top: 1px solid #E0D5C4"><span style="font-family: 'Fraunces', Georgia, serif; font-style: italic; font-size: 16px; color: #7F5B34; width: 24px">03</span><span style="flex-grow: 1; font-family: 'Fraunces', Georgia, serif; font-size: 22px; color: #0F3D32">Private building care</span><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0F3D32" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg></li>
+<li style="display: flex; align-items: center; gap: 14px; min-height: 72px; border-top: 1px solid #E0D5C4"><span style="font-family: 'Fraunces', Georgia, serif; font-style: italic; font-size: 16px; color: #7F5B34; width: 24px">04</span><span style="flex-grow: 1; font-family: 'Fraunces', Georgia, serif; font-size: 22px; color: #0F3D32">A direct line to your team</span><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0F3D32" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg></li>
+<li style="display: flex; align-items: center; gap: 14px; min-height: 72px; border-top: 1px solid #E0D5C4"><span style="font-family: 'Fraunces', Georgia, serif; font-style: italic; font-size: 16px; color: #7F5B34; width: 24px">05</span><span style="flex-grow: 1; font-family: 'Fraunces', Georgia, serif; font-size: 22px; color: #0F3D32">Building marketplace</span><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0F3D32" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg></li>
+</ol>
+</section>
+
+<section style="padding: 64px 20px; border-top: 1px solid #E0D5C4; flex-shrink: 0; display: flex; flex-direction: column; gap: 16px">
+<img src="/_blob/6e990a1e329a10dc6d522f58c4da4b3a" alt="Residents arriving home through the courtyard, welcomed by the concierge" style="width: 350px; height: 220px; object-fit: cover; object-position: 82% 50%; border-radius: 4px; display: block">
+<div style="display: flex; align-items: center; gap: 10px; margin-top: 12px; font-size: 11px; font-weight: 600; letter-spacing: 2px; color: #7F5B34"><span style="width: 24px; height: 1px; background: #D4AF7C"></span>MADE FOR YOUR BUILDING</div>
+<h2 style="margin: 0; font-family: 'Fraunces', Georgia, serif; font-weight: 350; font-size: 34px; line-height: 1.08; letter-spacing: -0.8px; color: #0F3D32">One front door. <em style="font-weight: 300">Two sides of it.</em></h2>
+<div role="tablist" aria-label="Who is 2Gaff for" style="display: flex; padding: 4px; border: 1px solid #E0D5C4; border-radius: 999px; margin-top: 8px">
+<button type="button" role="tab" aria-selected="true" style="flex: 1; height: 44px; border: none; border-radius: 999px; background: #0F3D32; color: #FAF7F2; font-family: 'Figtree', sans-serif; font-size: 14px; font-weight: 600">For residents</button>
+<button type="button" role="tab" aria-selected="false" style="flex: 1; height: 44px; border: none; border-radius: 999px; background: transparent; color: #0F3D32; font-family: 'Figtree', sans-serif; font-size: 14px; font-weight: 600">For property teams</button>
+</div>
+<div style="display: flex; flex-direction: column; gap: 14px; margin-top: 8px">
+<div style="display: flex; gap: 12px; font-size: 16px; line-height: 1.45"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#B08A55" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex-shrink: 0; margin-top: 2px"><path d="M20 6 9 17l-5-5"></path></svg>See notices and upcoming events</div>
+<div style="display: flex; gap: 12px; font-size: 16px; line-height: 1.45"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#B08A55" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex-shrink: 0; margin-top: 2px"><path d="M20 6 9 17l-5-5"></path></svg>Book shared facilities in a few taps</div>
+<div style="display: flex; gap: 12px; font-size: 16px; line-height: 1.45"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#B08A55" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex-shrink: 0; margin-top: 2px"><path d="M20 6 9 17l-5-5"></path></svg>Report issues privately, with photos</div>
+<div style="display: flex; gap: 12px; font-size: 16px; line-height: 1.45"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#B08A55" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex-shrink: 0; margin-top: 2px"><path d="M20 6 9 17l-5-5"></path></svg>Message your property team</div>
+<div style="display: flex; gap: 12px; font-size: 16px; line-height: 1.45"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#B08A55" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex-shrink: 0; margin-top: 2px"><path d="M20 6 9 17l-5-5"></path></svg>Buy, sell and lend with neighbours</div>
+</div>
+<a href="#" style="display: inline-flex; align-items: center; gap: 8px; height: 44px; font-size: 16px; font-weight: 600; color: #0F3D32; text-decoration: none">Join your building<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a>
+</section>
+
+<section style="background: #EAF0E9; padding: 64px 20px; flex-shrink: 0; display: flex; flex-direction: column; gap: 16px">
+<div style="display: flex; align-items: center; gap: 10px; font-size: 11px; font-weight: 600; letter-spacing: 2px; color: #7F5B34"><span style="width: 24px; height: 1px; background: #B08A55"></span>PRIVATE BY DEFAULT</div>
+<p style="margin: 0; font-family: 'Fraunces', Georgia, serif; font-weight: 350; font-size: 30px; line-height: 1.15; letter-spacing: -0.6px; color: #0F3D32">Your name and apartment stay between you and your property team. <em style="font-weight: 300">Neighbours can’t look you up.</em></p>
+<div style="display: flex; flex-direction: column; gap: 24px; margin-top: 20px">
+<div style="border-top: 1px solid #0F3D32; padding-top: 16px; display: flex; flex-direction: column; gap: 6px"><h3 style="margin: 0; font-size: 17px; font-weight: 700; color: #0F3D32">Listed as “A neighbour”</h3><p style="margin: 0; font-size: 15px; line-height: 1.5; color: #4A4A45">Marketplace listings never show your name, apartment or contact details.</p></div>
+<div style="border-top: 1px solid #0F3D32; padding-top: 16px; display: flex; flex-direction: column; gap: 6px"><h3 style="margin: 0; font-size: 17px; font-weight: 700; color: #0F3D32">A 24-hour backstop</h3><p style="margin: 0; font-size: 15px; line-height: 1.5; color: #4A4A45">Reports go to your property team first. If nothing has happened within 24 hours, 2Gaff steps in.</p></div>
+<div style="border-top: 1px solid #0F3D32; padding-top: 16px; display: flex; flex-direction: column; gap: 6px"><h3 style="margin: 0; font-size: 17px; font-weight: 700; color: #0F3D32">No payments taken</h3><p style="margin: 0; font-size: 15px; line-height: 1.5; color: #4A4A45">Exchanges are arranged between verified residents. 2Gaff never handles money.</p></div>
+</div>
+</section>
+
+<section style="padding: 64px 20px; flex-shrink: 0; display: flex; flex-direction: column; gap: 16px">
+<div style="display: flex; align-items: center; gap: 10px; font-size: 11px; font-weight: 600; letter-spacing: 2px; color: #7F5B34"><span style="width: 24px; height: 1px; background: #D4AF7C"></span>HOW JOINING WORKS</div>
+<h2 style="margin: 0; font-family: 'Fraunces', Georgia, serif; font-weight: 350; font-size: 34px; line-height: 1.08; letter-spacing: -0.8px; color: #0F3D32">From first hello to <em style="font-weight: 300">everyday helpful.</em></h2>
+<div style="position: relative; display: flex; flex-direction: column; gap: 28px; margin-top: 16px">
+<span style="position: absolute; left: 21px; top: 22px; bottom: 22px; width: 1px; background: #D4AF7C"></span>
+<div style="position: relative; display: flex; gap: 18px"><span style="width: 44px; height: 44px; flex-shrink: 0; border-radius: 999px; background: #FAF7F2; border: 1px solid #D4AF7C; display: flex; align-items: center; justify-content: center; font-family: 'Fraunces', Georgia, serif; font-size: 19px; color: #0F3D32; box-sizing: border-box">1</span><div><h3 style="margin: 8px 0 0 0; font-family: 'Fraunces', Georgia, serif; font-weight: 400; font-size: 22px; color: #0F3D32">Receive your invitation</h3><p style="margin: 6px 0 0 0; font-size: 15px; line-height: 1.5; color: #6D6458">Your property team shares a joining link, QR code or building code.</p></div></div>
+<div style="position: relative; display: flex; gap: 18px"><span style="width: 44px; height: 44px; flex-shrink: 0; border-radius: 999px; background: #FAF7F2; border: 1px solid #D4AF7C; display: flex; align-items: center; justify-content: center; font-family: 'Fraunces', Georgia, serif; font-size: 19px; color: #0F3D32; box-sizing: border-box">2</span><div><h3 style="margin: 8px 0 0 0; font-family: 'Fraunces', Georgia, serif; font-weight: 400; font-size: 22px; color: #0F3D32">Sign in securely</h3><p style="margin: 6px 0 0 0; font-size: 15px; line-height: 1.5; color: #6D6458">Continue with email, Google or Apple. One personal account stays with you.</p></div></div>
+<div style="position: relative; display: flex; gap: 18px"><span style="width: 44px; height: 44px; flex-shrink: 0; border-radius: 999px; background: #0F3D32; display: flex; align-items: center; justify-content: center"><svg width="20" height="13" viewBox="0 0 308 200" aria-hidden="true"><path fill="#FAF7F2" d="M57 193H8Q0 193 0 185V91Q0 85 5 81L99 3Q105 -1 111 4L191 69Q197 74 197 82V185Q197 193 189 193H138Q124 193 124 183Q123 172 131 157Q133 153 137 157L148 165H169V87L105 35L29 98V165H54Q57 165 57 168Z"></path><path fill="#D4AF7C" d="M251 193H300Q308 193 308 185V91Q308 85 303 81L212 4Q206 -1 200 4L123 67Q118 71 118 78V140Q118 148 126 152Q132 156 138 152Q146 148 146 140V86L206 35L279 98V165H252Q249 165 249 168V191Q249 193 251 193Z"></path></svg></span><div><h3 style="margin: 8px 0 0 0; font-family: 'Fraunces', Georgia, serif; font-weight: 400; font-size: 22px; color: #0F3D32">Step inside</h3><p style="margin: 6px 0 0 0; font-size: 15px; line-height: 1.5; color: #6D6458">Once your residency is confirmed, your building opens up.</p></div></div>
+</div>
+<a href="#" style="margin-top: 16px; display: inline-flex; align-items: center; justify-content: center; gap: 8px; height: 52px; background: #0F3D32; color: #FAF7F2; border-radius: 999px; font-size: 15px; font-weight: 600; text-decoration: none">Get started<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a>
+</section>
+
+<section style="background: #0F3D32; flex-shrink: 0; display: flex; flex-direction: column">
+<img src="/_blob/f3843489ee87817d1965d8f9b73aee5a" alt="A resident returning home with her dog, greeted by the concierge" style="width: 390px; height: 240px; object-fit: cover; object-position: 72% 50%; display: block">
+<div style="padding: 44px 20px 52px 20px; display: flex; flex-direction: column">
+<div style="display: flex; align-items: center; gap: 10px; font-size: 11px; font-weight: 600; letter-spacing: 2px; color: #D4AF7C"><span style="width: 24px; height: 1px; background: #D4AF7C"></span>READY WHEN YOU ARE</div>
+<h2 style="margin: 14px 0 0 0; font-family: 'Fraunces', Georgia, serif; font-weight: 300; font-size: 42px; line-height: 1.04; letter-spacing: -1px; color: #FAF7F2">A little closer <em>to home.</em></h2>
+<span style="margin-top: 28px; font-size: 14px; color: #C9D3CE">New to 2Gaff?</span>
+<a href="#" style="margin-top: 10px; display: inline-flex; align-items: center; justify-content: center; gap: 8px; height: 52px; background: #D4AF7C; color: #0F3D32; border-radius: 999px; font-size: 15px; font-weight: 700; text-decoration: none">Get started<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a>
+<span style="margin-top: 22px; font-size: 14px; color: #C9D3CE">Been here before?</span>
+<a href="#" style="margin-top: 10px; display: inline-flex; align-items: center; justify-content: center; height: 52px; border: 1.5px solid #FAF7F2; color: #FAF7F2; border-radius: 999px; font-size: 15px; font-weight: 600; text-decoration: none; box-sizing: border-box">Sign in</a>
+<div style="display: flex; align-items: center; gap: 14px; margin-top: 32px; padding-top: 24px; border-top: 1px solid rgba(212,175,124,0.35)">
+<a href="#" aria-label="Get it on Google Play" style="display: flex; flex-shrink: 0"><img src="/_blob/8b700f226e1d95d0cc80ca667db3ac84" alt="Get it on Google Play" style="height: 48px; width: auto; display: block"></a>
+<span style="font-size: 13px; line-height: 1.4; color: #C9D3CE">Download for Android, or use 2Gaff in your browser.</span>
+</div>
+</div>
+</section>
+
+<footer style="flex-grow: 1; padding: 48px 20px 32px 20px; display: flex; flex-direction: column; gap: 32px; box-sizing: border-box">
+<div style="display: flex; flex-direction: column; gap: 12px">
+<a href="#" aria-label="2Gaff home" style="display: flex; align-items: center; gap: 8px; text-decoration: none">
+<svg width="37" height="24" viewBox="0 0 308 200" aria-hidden="true"><path fill="#0F3D32" d="M57 193H8Q0 193 0 185V91Q0 85 5 81L99 3Q105 -1 111 4L191 69Q197 74 197 82V185Q197 193 189 193H138Q124 193 124 183Q123 172 131 157Q133 153 137 157L148 165H169V87L105 35L29 98V165H54Q57 165 57 168Z"></path><path fill="#D4AF7C" d="M251 193H300Q308 193 308 185V91Q308 85 303 81L212 4Q206 -1 200 4L123 67Q118 71 118 78V140Q118 148 126 152Q132 156 138 152Q146 148 146 140V86L206 35L279 98V165H252Q249 165 249 168V191Q249 193 251 193Z"></path><rect x="61" y="111" width="15" height="15" rx="1" fill="#0F3D32"></rect><rect x="81" y="111" width="15" height="15" rx="1" fill="#0F3D32"></rect><rect x="61" y="131" width="15" height="15" rx="1" fill="#0F3D32"></rect><rect x="81" y="131" width="15" height="15" rx="1" fill="#0F3D32"></rect><rect x="216" y="111" width="15" height="15" rx="1" fill="#D4AF7C"></rect><rect x="236" y="111" width="15" height="15" rx="1" fill="#D4AF7C"></rect><rect x="216" y="131" width="15" height="15" rx="1" fill="#D4AF7C"></rect><rect x="236" y="131" width="15" height="15" rx="1" fill="#D4AF7C"></rect></svg>
+<span style="font-size: 23px; font-weight: 700; letter-spacing: -1px; color: #0F3D32">2Gaff</span>
+</a>
+<span style="font-size: 14px; color: #6D6458">Your property community, in one place.</span>
+</div>
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; font-size: 15px">
+<div style="display: flex; flex-direction: column; gap: 10px"><span style="font-size: 11px; font-weight: 700; letter-spacing: 1.6px; color: #7F5B34">RESIDENTS</span><a href="#" style="text-decoration: none; color: #2D2D2D">Get started</a><a href="#" style="text-decoration: none; color: #2D2D2D">Sign in</a></div>
+<div style="display: flex; flex-direction: column; gap: 10px"><span style="font-size: 11px; font-weight: 700; letter-spacing: 1.6px; color: #7F5B34">PROPERTY TEAMS</span><a href="#" style="text-decoration: none; color: #2D2D2D">Set up your building</a><a href="#" style="text-decoration: none; color: #2D2D2D">Team sign in</a></div>
+<div style="display: flex; flex-direction: column; gap: 10px"><span style="font-size: 11px; font-weight: 700; letter-spacing: 1.6px; color: #7F5B34">HELP</span><a href="#" style="text-decoration: none; color: #2D2D2D">Support</a><a href="#" style="text-decoration: none; color: #2D2D2D">Privacy</a><a href="#" style="text-decoration: none; color: #2D2D2D">Terms</a></div>
+</div>
+<div style="padding-top: 18px; border-top: 1px solid #E0D5C4; font-size: 12px; line-height: 1.6; color: #6D6458">© 2026 2Gaff. Images show fictional residents and properties.<br>Built by Deeray Multimedia Ltd</div>
+</footer>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"heroMotion":{"editor":"boolean","default":true},"$preview":{"width":390,"height":5560}}'>
+class Component extends DCLogic {
+renderVals() {
+const on = this.props.heroMotion ?? true;
+return { heroClass: on ? 'hero' : 'hero paused' };
+}
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,268 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=1440">
+<title>2Gaff homepage, desktop</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..600&amp;family=Figtree:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#FAF7F2}
+a{color:#0F3D32}a:hover{color:#0A2A22}
+.scene{position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;opacity:0;transform-origin:55% 35%;animation:scene 18s linear infinite both,drift 18s ease-out infinite both}
+.s1{animation-delay:-1s,-1s}.s2{animation-delay:5s,5s}.s3{animation-delay:11s,11s}
+@keyframes scene{0%{opacity:0}5%{opacity:1}33.4%{opacity:1}40%{opacity:0}100%{opacity:0}}
+@keyframes drift{0%{transform:scale(1.02)}40%{transform:scale(1.1) translate(-1.2%,-0.8%)}100%{transform:scale(1.1) translate(-1.2%,-0.8%)}}
+.chip{position:absolute;opacity:0;animation:chip 18s ease infinite both}
+.c1{animation-delay:-1s}.c2{animation-delay:5s}.c3{animation-delay:11s}
+@keyframes chip{0%,9%{opacity:0;transform:translateY(16px)}13%{opacity:1;transform:translateY(0)}31%{opacity:1;transform:translateY(0)}35%{opacity:0;transform:translateY(-10px)}100%{opacity:0;transform:translateY(-10px)}}
+.fill{display:block;height:2px;background:#0F3D32;transform-origin:left center;transform:scaleX(0);animation:fill 18s linear infinite both}
+.f1{animation-delay:-1s}.f2{animation-delay:5s}.f3{animation-delay:11s}
+@keyframes fill{0%{transform:scaleX(0);opacity:1}33.4%{transform:scaleX(1);opacity:1}36%{transform:scaleX(1);opacity:0}100%{transform:scaleX(1);opacity:0}}
+.lab{color:#6D6458;animation:lab 18s linear infinite both}
+.l1{animation-delay:-1s}.l2{animation-delay:5s}.l3{animation-delay:11s}
+@keyframes lab{0%{color:#6D6458}3%{color:#0F3D32}33.4%{color:#0F3D32}36%{color:#6D6458}100%{color:#6D6458}}
+.paused .scene,.paused .chip,.paused .fill,.paused .lab{animation-play-state:paused}
+@media (prefers-reduced-motion: reduce){.scene,.chip,.fill,.lab{animation:none}.s1,.c1{opacity:1}.f1{transform:scaleX(1)}}
+</style>
+</head>
+<body>
+<div style="width: 1440px; height: 5360px; display: flex; flex-direction: column; background: #FAF7F2; font-family: 'Figtree', system-ui, sans-serif; color: #2D2D2D; overflow: hidden">
+
+<header style="height: 88px; flex-shrink: 0; display: flex; align-items: center; justify-content: space-between; padding: 0 72px; border-bottom: 1px solid #E0D5C4; box-sizing: border-box">
+<a href="#" aria-label="2Gaff home" style="display: flex; align-items: center; gap: 10px; text-decoration: none">
+<svg width="46" height="30" viewBox="0 0 308 200" aria-hidden="true"><path fill="#0F3D32" d="M57 193H8Q0 193 0 185V91Q0 85 5 81L99 3Q105 -1 111 4L191 69Q197 74 197 82V185Q197 193 189 193H138Q124 193 124 183Q123 172 131 157Q133 153 137 157L148 165H169V87L105 35L29 98V165H54Q57 165 57 168Z"></path><path fill="#D4AF7C" d="M251 193H300Q308 193 308 185V91Q308 85 303 81L212 4Q206 -1 200 4L123 67Q118 71 118 78V140Q118 148 126 152Q132 156 138 152Q146 148 146 140V86L206 35L279 98V165H252Q249 165 249 168V191Q249 193 251 193Z"></path><rect x="61" y="111" width="15" height="15" rx="1" fill="#0F3D32"></rect><rect x="81" y="111" width="15" height="15" rx="1" fill="#0F3D32"></rect><rect x="61" y="131" width="15" height="15" rx="1" fill="#0F3D32"></rect><rect x="81" y="131" width="15" height="15" rx="1" fill="#0F3D32"></rect><rect x="216" y="111" width="15" height="15" rx="1" fill="#D4AF7C"></rect><rect x="236" y="111" width="15" height="15" rx="1" fill="#D4AF7C"></rect><rect x="216" y="131" width="15" height="15" rx="1" fill="#D4AF7C"></rect><rect x="236" y="131" width="15" height="15" rx="1" fill="#D4AF7C"></rect></svg>
+<span style="font-size: 28px; font-weight: 700; letter-spacing: -1.2px; color: #0F3D32">2Gaff</span>
+</a>
+<nav aria-label="Main" style="display: flex; gap: 40px; font-size: 15px; font-weight: 500">
+<a href="#everyday" style="text-decoration: none; color: #2D2D2D">Everyday essentials</a>
+<a href="#teams" style="text-decoration: none; color: #2D2D2D">For property teams</a>
+<a href="#privacy" style="text-decoration: none; color: #2D2D2D">Privacy</a>
+<a href="#joining" style="text-decoration: none; color: #2D2D2D">How joining works</a>
+</nav>
+<div style="display: flex; align-items: center; gap: 24px">
+<a href="#" aria-label="Get it on Google Play" style="display: flex"><img src="../images/google-play-badge.png" alt="Get it on Google Play" style="height: 40px; width: auto; display: block"></a>
+<span style="width: 1px; height: 28px; background: #E0D5C4"></span>
+<a href="#" style="display: flex; align-items: center; gap: 8px; font-size: 15px; font-weight: 600; text-decoration: none; color: #0F3D32; height: 44px">
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"></circle><path d="M4 21c0-4 4-6 8-6s8 2 8 6"></path></svg>
+Sign in</a>
+<a href="#" style="display: inline-flex; align-items: center; height: 44px; padding: 0 22px; background: #0F3D32; color: #FAF7F2; border-radius: 999px; font-size: 15px; font-weight: 600; text-decoration: none">Get started</a>
+</div>
+</header>
+
+<section class="hero" style="display: flex; align-items: center; gap: 72px; padding: 48px 72px 72px 72px; flex-shrink: 0">
+<div style="width: 560px; flex-shrink: 0; display: flex; flex-direction: column">
+<div style="display: flex; align-items: center; gap: 14px; font-size: 13px; font-weight: 600; letter-spacing: 2.4px; color: #7F5B34"><span style="width: 36px; height: 1px; background: #D4AF7C"></span>LIFE AROUND YOUR BUILDING</div>
+<h1 style="margin: 28px 0 0 0; font-family: 'Fraunces', Georgia, serif; font-weight: 350; font-size: 80px; line-height: 1; letter-spacing: -2.4px; color: #0F3D32">Your building, a little <em style="font-weight: 300; font-style: italic">closer.</em></h1>
+<p style="margin: 28px 0 0 0; font-size: 19px; line-height: 1.6; color: #4A4A45; max-width: 520px">2Gaff connects you with your neighbours and the team who look after your home. Notices and events, shared facilities, private reports, a direct line to your property team and a building marketplace, all in one welcoming place.</p>
+<div style="display: flex; gap: 12px; margin-top: 40px">
+<a href="#" style="display: inline-flex; align-items: center; gap: 12px; height: 56px; padding: 0 30px; background: #0F3D32; color: #FAF7F2; border-radius: 999px; font-size: 16px; font-weight: 600; text-decoration: none">Get started
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a>
+<a href="#" style="display: inline-flex; align-items: center; height: 56px; padding: 0 30px; border: 1.5px solid #0F3D32; color: #0F3D32; border-radius: 999px; font-size: 16px; font-weight: 600; text-decoration: none; box-sizing: border-box">Sign in</a>
+</div>
+<div style="display: flex; gap: 32px; margin-top: 18px; font-size: 14px; line-height: 1.5; color: #6D6458">
+<p style="margin: 0; width: 220px"><strong style="color: #2D2D2D; font-weight: 600">New here?</strong> Start with the joining link or building code from your property team.</p>
+<p style="margin: 0; width: 220px"><strong style="color: #2D2D2D; font-weight: 600">Returning?</strong> Sign in with the email or Google or Apple account you joined with.</p>
+</div>
+<div style="display: flex; align-items: center; gap: 20px; margin-top: 40px; padding-top: 32px; border-top: 1px solid #E0D5C4">
+<a href="#" aria-label="Get it on Google Play" style="display: flex"><img src="../images/google-play-badge.png" alt="Get it on Google Play" style="height: 56px; width: auto; display: block"></a>
+<div style="font-size: 14px; line-height: 1.5; color: #6D6458"><strong style="display: block; color: #2D2D2D; font-weight: 600">Take your building with you</strong>Download for Android, or use 2Gaff in any browser.</div>
+</div>
+</div>
+
+<div style="position: relative; width: 664px; height: 824px; flex-shrink: 0">
+<svg width="620" height="740" viewBox="0 0 620 740" aria-hidden="true" style="position: absolute; left: 44px; top: 0"><polygon points="300,1 599,221 599,739 1,739 1,221" fill="none" stroke="#D4AF7C" stroke-width="2"></polygon></svg>
+<div style="position: absolute; left: 0; top: 44px; width: 600px; height: 720px; overflow: hidden; clip-path: polygon(50% 0, 100% 220px, 100% 100%, 0 100%, 0 220px); background: #E8DFD0">
+<img class="scene s1" src="../images/residents-concierge-mobile.jpg" alt="Two residents leaving their building, greeted by the concierge" style="object-position: 50% 22%">
+<img class="scene s2" src="../images/everyday-neighbours-mobile.jpg" alt="A resident with shopping and her dog chatting to the concierge at the entrance" style="object-position: 50% 25%">
+<img class="scene s3" src="../images/courtyard-welcome-mobile.jpg" alt="Residents walking through the landscaped courtyard at golden hour" style="object-position: 50% 30%">
+</div>
+
+<div class="chip c1" style="left: -96px; top: 548px; width: 330px; display: flex; gap: 14px; align-items: flex-start; padding: 16px 18px; background: #FBF8F2; border: 1px solid #E0D5C4; border-radius: 18px; box-shadow: 0 28px 48px -24px rgba(15,61,50,0.45); box-sizing: border-box">
+<span style="width: 40px; height: 40px; flex-shrink: 0; border-radius: 999px; background: #0F3D32; color: #D4AF7C; display: flex; align-items: center; justify-content: center"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 8a6 6 0 1 1 12 0c0 7 3 9 3 9H3s3-2 3-9"></path><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"></path></svg></span>
+<div style="display: flex; flex-direction: column; gap: 4px"><span style="font-size: 11px; font-weight: 600; letter-spacing: 1.6px; color: #7F5B34">NOTICE · PROPERTY TEAM</span><span style="font-size: 15px; font-weight: 500; line-height: 1.35; color: #2D2D2D">Window cleaning on the east side, Thursday 9am to 1pm.</span></div>
+</div>
+<div class="chip c2" style="left: 380px; top: 170px; width: 300px; display: flex; gap: 14px; align-items: flex-start; padding: 16px 18px; background: #FBF8F2; border: 1px solid #E0D5C4; border-radius: 18px; box-shadow: 0 28px 48px -24px rgba(15,61,50,0.45); box-sizing: border-box">
+<span style="width: 40px; height: 40px; flex-shrink: 0; border-radius: 999px; background: #0F3D32; color: #D4AF7C; display: flex; align-items: center; justify-content: center"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"></rect><path d="M16 2v4M8 2v4M3 10h18"></path></svg></span>
+<div style="display: flex; flex-direction: column; gap: 4px"><span style="font-size: 11px; font-weight: 600; letter-spacing: 1.6px; color: #7F5B34">EVENT · FRIDAY 7PM</span><span style="font-size: 15px; font-weight: 500; line-height: 1.35; color: #2D2D2D">Courtyard supper. 14 neighbours going.</span></div>
+</div>
+<div class="chip c3" style="left: -96px; top: 440px; width: 320px; display: flex; gap: 14px; align-items: flex-start; padding: 16px 18px; background: #FBF8F2; border: 1px solid #E0D5C4; border-radius: 18px; box-shadow: 0 28px 48px -24px rgba(15,61,50,0.45); box-sizing: border-box">
+<span style="width: 40px; height: 40px; flex-shrink: 0; border-radius: 999px; background: #0F3D32; color: #D4AF7C; display: flex; align-items: center; justify-content: center"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="m8.5 12 2.5 2.5 4.5-5"></path></svg></span>
+<div style="display: flex; flex-direction: column; gap: 4px"><span style="font-size: 11px; font-weight: 600; letter-spacing: 1.6px; color: #7F5B34">BOOKING CONFIRMED</span><span style="font-size: 15px; font-weight: 500; line-height: 1.35; color: #2D2D2D">Residents’ lounge, Saturday at 2pm.</span></div>
+</div>
+
+<div style="position: absolute; left: 0; top: 788px; width: 600px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px">
+<div style="display: flex; flex-direction: column; gap: 10px"><span class="lab l1" style="font-size: 12px; font-weight: 600; letter-spacing: 1.4px">MORNING · NOTICES</span><span style="display: block; height: 2px; background: #E0D5C4"><span class="fill f1"></span></span></div>
+<div style="display: flex; flex-direction: column; gap: 10px"><span class="lab l2" style="font-size: 12px; font-weight: 600; letter-spacing: 1.4px">AFTERNOON · EVENTS</span><span style="display: block; height: 2px; background: #E0D5C4"><span class="fill f2"></span></span></div>
+<div style="display: flex; flex-direction: column; gap: 10px"><span class="lab l3" style="font-size: 12px; font-weight: 600; letter-spacing: 1.4px">EVENING · BOOKINGS</span><span style="display: block; height: 2px; background: #E0D5C4"><span class="fill f3"></span></span></div>
+</div>
+</div>
+</section>
+
+<section id="everyday" style="padding: 128px 72px; border-top: 1px solid #E0D5C4; flex-shrink: 0; display: flex; flex-direction: column; gap: 72px">
+<div style="display: flex; justify-content: space-between; align-items: flex-end; gap: 96px">
+<div style="display: flex; flex-direction: column; gap: 24px; width: 760px">
+<div style="display: flex; align-items: center; gap: 14px; font-size: 13px; font-weight: 600; letter-spacing: 2.4px; color: #7F5B34"><span style="width: 36px; height: 1px; background: #D4AF7C"></span>EVERYDAY ESSENTIALS</div>
+<h2 style="margin: 0; font-family: 'Fraunces', Georgia, serif; font-weight: 350; font-size: 60px; line-height: 1.05; letter-spacing: -1.6px; color: #0F3D32">Everything in its place. <em style="font-weight: 300">Everyone in the loop.</em></h2>
+</div>
+<p style="margin: 0 0 8px 0; width: 420px; font-size: 18px; line-height: 1.6; color: #4A4A45">From the morning notice to a quiet word with the concierge, the everyday running of your building sits in one calm, private place.</p>
+</div>
+
+<div style="display: flex; gap: 96px; align-items: flex-start">
+<ol style="list-style: none; margin: 0; padding: 0; width: 760px; flex-shrink: 0; border-bottom: 1px solid #E0D5C4">
+<li style="display: grid; grid-template-columns: 72px 1fr 48px; align-items: start; padding: 32px 24px; border-top: 1px solid #E0D5C4">
+<span style="font-family: 'Fraunces', Georgia, serif; font-style: italic; font-size: 20px; color: #7F5B34; padding-top: 6px">01</span>
+<div><h3 style="margin: 0; font-family: 'Fraunces', Georgia, serif; font-weight: 400; font-size: 32px; letter-spacing: -0.6px; color: #0F3D32">Notices &amp; events</h3><p style="margin: 8px 0 0 0; font-size: 16px; line-height: 1.55; color: #6D6458; max-width: 500px">Building news and upcoming events from your property team. Neighbours see how many people are going, not who.</p></div>
+<span style="width: 44px; height: 44px; border-radius: 999px; border: 1px solid #E0D5C4; color: #0F3D32; display: flex; align-items: center; justify-content: center"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></span>
+</li>
+<li style="display: grid; grid-template-columns: 72px 1fr 48px; align-items: start; padding: 32px 24px; border-top: 1px solid #0F3D32; background: #EAF0E9">
+<span style="font-family: 'Fraunces', Georgia, serif; font-style: italic; font-size: 20px; color: #0F3D32; padding-top: 6px">02</span>
+<div><h3 style="margin: 0; font-family: 'Fraunces', Georgia, serif; font-weight: 400; font-size: 32px; letter-spacing: -0.6px; color: #0F3D32">Shared facilities</h3><p style="margin: 8px 0 0 0; font-size: 16px; line-height: 1.55; color: #4A4A45; max-width: 500px">Book the gym, lounge or guest suite in a few taps. Each space shows its capacity, booking length and house guidance before you confirm.</p></div>
+<span style="width: 44px; height: 44px; border-radius: 999px; background: #0F3D32; color: #FAF7F2; display: flex; align-items: center; justify-content: center"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></span>
+</li>
+<li style="display: grid; grid-template-columns: 72px 1fr 48px; align-items: start; padding: 32px 24px; border-top: 1px solid #E0D5C4">
+<span style="font-family: 'Fraunces', Georgia, serif; font-style: italic; font-size: 20px; color: #7F5B34; padding-top: 6px">03</span>
+<div><h3 style="margin: 0; font-family: 'Fraunces', Georgia, serif; font-weight: 400; font-size: 32px; letter-spacing: -0.6px; color: #0F3D32">Private building care</h3><p style="margin: 8px 0 0 0; font-size: 16px; line-height: 1.55; color: #6D6458; max-width: 500px">Report a problem in your home or a shared area, with photos if they help, then follow every private update.</p></div>
+<span style="width: 44px; height: 44px; border-radius: 999px; border: 1px solid #E0D5C4; color: #0F3D32; display: flex; align-items: center; justify-content: center"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></span>
+</li>
+<li style="display: grid; grid-template-columns: 72px 1fr 48px; align-items: start; padding: 32px 24px; border-top: 1px solid #E0D5C4">
+<span style="font-family: 'Fraunces', Georgia, serif; font-style: italic; font-size: 20px; color: #7F5B34; padding-top: 6px">04</span>
+<div><h3 style="margin: 0; font-family: 'Fraunces', Georgia, serif; font-weight: 400; font-size: 32px; letter-spacing: -0.6px; color: #0F3D32">A direct line to your team</h3><p style="margin: 8px 0 0 0; font-size: 16px; line-height: 1.55; color: #6D6458; max-width: 500px">Message your property team and concierge directly. Every conversation stays between you and the people who look after your building.</p></div>
+<span style="width: 44px; height: 44px; border-radius: 999px; border: 1px solid #E0D5C4; color: #0F3D32; display: flex; align-items: center; justify-content: center"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></span>
+</li>
+<li style="display: grid; grid-template-columns: 72px 1fr 48px; align-items: start; padding: 32px 24px; border-top: 1px solid #E0D5C4">
+<span style="font-family: 'Fraunces', Georgia, serif; font-style: italic; font-size: 20px; color: #7F5B34; padding-top: 6px">05</span>
+<div><h3 style="margin: 0; font-family: 'Fraunces', Georgia, serif; font-weight: 400; font-size: 32px; letter-spacing: -0.6px; color: #0F3D32">Building marketplace</h3><p style="margin: 8px 0 0 0; font-size: 16px; line-height: 1.55; color: #6D6458; max-width: 500px">Offer, find and lend things between verified residents. You appear as “A neighbour”, never by name or apartment.</p></div>
+<span style="width: 44px; height: 44px; border-radius: 999px; border: 1px solid #E0D5C4; color: #0F3D32; display: flex; align-items: center; justify-content: center"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></span>
+</li>
+</ol>
+
+<div style="position: relative; width: 440px; height: 760px; flex-shrink: 0">
+<div style="position: absolute; left: 20px; top: 120px; width: 400px; height: 600px; background: #E8DFD0; clip-path: polygon(50% 0, 100% 170px, 100% 100%, 0 100%, 0 170px)"></div>
+<div style="position: absolute; left: 70px; top: 40px; width: 300px; height: 640px; box-sizing: border-box; padding: 10px; background: #1E2622; border-radius: 46px; box-shadow: 0 40px 70px -30px rgba(15,61,50,0.55)">
+<div style="width: 280px; height: 620px; background: #FAF7F2; border-radius: 36px; overflow: hidden; display: flex; flex-direction: column; padding: 30px 18px 20px 18px; box-sizing: border-box; gap: 14px">
+<div style="display: flex; align-items: center; justify-content: space-between; font-size: 12px; color: #6D6458"><span style="display: flex; align-items: center; gap: 4px; font-weight: 600; color: #0F3D32"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"></path></svg>Facilities</span><span>Alder Court</span></div>
+<div><div style="font-family: 'Fraunces', Georgia, serif; font-size: 25px; line-height: 1.1; color: #0F3D32">Residents’ lounge</div><div style="font-size: 12px; color: #6D6458; margin-top: 4px">Up to 12 people · 2-hour sessions</div></div>
+<img src="../images/courtyard-welcome.jpg" alt="" style="width: 244px; height: 96px; object-fit: cover; object-position: 20% 60%; border-radius: 14px; display: block">
+<div style="font-size: 10px; font-weight: 700; letter-spacing: 1.4px; color: #6D6458">CHOOSE A DAY</div>
+<div style="display: flex; gap: 7px">
+<span style="width: 43px; height: 54px; border-radius: 12px; background: #0F3D32; color: #FAF7F2; display: flex; flex-direction: column; align-items: center; justify-content: center; font-size: 10px"><span>Sat</span><span style="font-size: 16px; font-weight: 700">26</span></span>
+<span style="width: 43px; height: 54px; border-radius: 12px; border: 1px solid #E0D5C4; box-sizing: border-box; color: #2D2D2D; display: flex; flex-direction: column; align-items: center; justify-content: center; font-size: 10px"><span>Sun</span><span style="font-size: 16px; font-weight: 700">27</span></span>
+<span style="width: 43px; height: 54px; border-radius: 12px; border: 1px solid #E0D5C4; box-sizing: border-box; color: #2D2D2D; display: flex; flex-direction: column; align-items: center; justify-content: center; font-size: 10px"><span>Mon</span><span style="font-size: 16px; font-weight: 700">28</span></span>
+<span style="width: 43px; height: 54px; border-radius: 12px; border: 1px solid #E0D5C4; box-sizing: border-box; color: #2D2D2D; display: flex; flex-direction: column; align-items: center; justify-content: center; font-size: 10px"><span>Tue</span><span style="font-size: 16px; font-weight: 700">29</span></span>
+<span style="width: 43px; height: 54px; border-radius: 12px; border: 1px solid #E0D5C4; box-sizing: border-box; color: #2D2D2D; display: flex; flex-direction: column; align-items: center; justify-content: center; font-size: 10px"><span>Wed</span><span style="font-size: 16px; font-weight: 700">30</span></span>
+</div>
+<div style="font-size: 10px; font-weight: 700; letter-spacing: 1.4px; color: #6D6458">AVAILABLE TIMES</div>
+<div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 7px; font-size: 13px; font-weight: 600">
+<span style="height: 36px; border-radius: 10px; border: 1px solid #E0D5C4; display: flex; align-items: center; justify-content: center; color: #2D2D2D">10:00</span>
+<span style="height: 36px; border-radius: 10px; border: 1px solid #E0D5C4; display: flex; align-items: center; justify-content: center; color: #2D2D2D">12:00</span>
+<span style="height: 36px; border-radius: 10px; border: 1.5px solid #0F3D32; background: #EAF0E9; display: flex; align-items: center; justify-content: center; color: #0F3D32">14:00</span>
+<span style="height: 36px; border-radius: 10px; border: 1px solid #E0D5C4; display: flex; align-items: center; justify-content: center; color: #2D2D2D">16:00</span>
+<span style="height: 36px; border-radius: 10px; border: 1px solid #E0D5C4; display: flex; align-items: center; justify-content: center; color: #2D2D2D">18:00</span>
+<span style="height: 36px; border-radius: 10px; border: 1px dashed #E0D5C4; display: flex; align-items: center; justify-content: center; color: #A39C91; text-decoration: line-through">20:00</span>
+</div>
+<div style="font-size: 11px; line-height: 1.45; color: #4A4A45; background: #EAF0E9; border-radius: 10px; padding: 10px 12px">House guidance: please leave the lounge as you found it. Other residents’ bookings stay private.</div>
+<span style="margin-top: auto; height: 46px; border-radius: 999px; background: #0F3D32; color: #FAF7F2; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 600">Confirm booking</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<section id="teams" style="display: flex; gap: 96px; align-items: center; padding: 128px 72px; border-top: 1px solid #E0D5C4; flex-shrink: 0">
+<img src="../images/courtyard-welcome.jpg" alt="Residents arriving home through the courtyard, welcomed by the concierge" style="width: 520px; height: 640px; object-fit: cover; object-position: 80% 50%; border-radius: 4px; flex-shrink: 0; display: block">
+<div style="display: flex; flex-direction: column; gap: 28px; flex-grow: 1">
+<div style="display: flex; align-items: center; gap: 14px; font-size: 13px; font-weight: 600; letter-spacing: 2.4px; color: #7F5B34"><span style="width: 36px; height: 1px; background: #D4AF7C"></span>MADE FOR YOUR BUILDING</div>
+<h2 style="margin: 0; font-family: 'Fraunces', Georgia, serif; font-weight: 350; font-size: 56px; line-height: 1.05; letter-spacing: -1.4px; color: #0F3D32">One front door. <em style="font-weight: 300">Two sides of it.</em></h2>
+<p style="margin: 0; font-size: 18px; line-height: 1.6; color: #4A4A45; max-width: 600px">Residents get a calmer, better-connected home. Property teams get one clear place to keep everyone informed and every issue moving.</p>
+<div style="display: flex; margin-top: 16px">
+<div style="width: 50%; padding-right: 48px; display: flex; flex-direction: column; gap: 16px">
+<h3 style="margin: 0 0 4px 0; font-family: 'Fraunces', Georgia, serif; font-weight: 400; font-size: 26px; color: #0F3D32">For residents</h3>
+<div style="display: flex; gap: 12px; font-size: 16px; line-height: 1.45; color: #2D2D2D"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#B08A55" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex-shrink: 0; margin-top: 2px"><path d="M20 6 9 17l-5-5"></path></svg>See notices and upcoming events</div>
+<div style="display: flex; gap: 12px; font-size: 16px; line-height: 1.45; color: #2D2D2D"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#B08A55" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex-shrink: 0; margin-top: 2px"><path d="M20 6 9 17l-5-5"></path></svg>Book shared facilities in a few taps</div>
+<div style="display: flex; gap: 12px; font-size: 16px; line-height: 1.45; color: #2D2D2D"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#B08A55" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex-shrink: 0; margin-top: 2px"><path d="M20 6 9 17l-5-5"></path></svg>Report issues privately, with photos</div>
+<div style="display: flex; gap: 12px; font-size: 16px; line-height: 1.45; color: #2D2D2D"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#B08A55" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex-shrink: 0; margin-top: 2px"><path d="M20 6 9 17l-5-5"></path></svg>Message your property team</div>
+<div style="display: flex; gap: 12px; font-size: 16px; line-height: 1.45; color: #2D2D2D"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#B08A55" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex-shrink: 0; margin-top: 2px"><path d="M20 6 9 17l-5-5"></path></svg>Buy, sell and lend with neighbours</div>
+<a href="#" style="margin-top: 12px; display: inline-flex; align-items: center; gap: 8px; font-size: 16px; font-weight: 600; color: #0F3D32; text-decoration: none; height: 44px">Join your building<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a>
+</div>
+<div style="width: 50%; padding-left: 48px; border-left: 1px solid #D4AF7C; display: flex; flex-direction: column; gap: 16px">
+<h3 style="margin: 0 0 4px 0; font-family: 'Fraunces', Georgia, serif; font-weight: 400; font-size: 26px; color: #0F3D32">For property teams</h3>
+<div style="display: flex; gap: 12px; font-size: 16px; line-height: 1.45; color: #2D2D2D"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#B08A55" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex-shrink: 0; margin-top: 2px"><path d="M20 6 9 17l-5-5"></path></svg>Publish updates and organise events</div>
+<div style="display: flex; gap: 12px; font-size: 16px; line-height: 1.45; color: #2D2D2D"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#B08A55" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex-shrink: 0; margin-top: 2px"><path d="M20 6 9 17l-5-5"></path></svg>Approve residents against your records</div>
+<div style="display: flex; gap: 12px; font-size: 16px; line-height: 1.45; color: #2D2D2D"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#B08A55" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex-shrink: 0; margin-top: 2px"><path d="M20 6 9 17l-5-5"></path></svg>Review, update and close reported issues</div>
+<div style="display: flex; gap: 12px; font-size: 16px; line-height: 1.45; color: #2D2D2D"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#B08A55" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex-shrink: 0; margin-top: 2px"><path d="M20 6 9 17l-5-5"></path></svg>Reply privately or message the building</div>
+<div style="display: flex; gap: 12px; font-size: 16px; line-height: 1.45; color: #2D2D2D"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#B08A55" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex-shrink: 0; margin-top: 2px"><path d="M20 6 9 17l-5-5"></path></svg>See what needs attention at a glance</div>
+<a href="#" style="margin-top: 12px; display: inline-flex; align-items: center; gap: 8px; font-size: 16px; font-weight: 600; color: #0F3D32; text-decoration: none; height: 44px">Set up your building<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a>
+</div>
+</div>
+</div>
+</section>
+
+<section id="privacy" style="background: #EAF0E9; padding: 112px 72px; flex-shrink: 0; display: flex; flex-direction: column; gap: 64px">
+<div style="display: flex; flex-direction: column; gap: 24px; max-width: 1000px">
+<div style="display: flex; align-items: center; gap: 14px; font-size: 13px; font-weight: 600; letter-spacing: 2.4px; color: #7F5B34"><span style="width: 36px; height: 1px; background: #B08A55"></span>PRIVATE BY DEFAULT</div>
+<p style="margin: 0; font-family: 'Fraunces', Georgia, serif; font-weight: 350; font-size: 52px; line-height: 1.12; letter-spacing: -1.2px; color: #0F3D32">Your name and apartment stay between you and your property team. <em style="font-weight: 300">Neighbours can’t look you up.</em></p>
+</div>
+<div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 56px">
+<div style="border-top: 1px solid #0F3D32; padding-top: 24px; display: flex; flex-direction: column; gap: 10px"><h3 style="margin: 0; font-size: 18px; font-weight: 700; color: #0F3D32">Listed as “A neighbour”</h3><p style="margin: 0; font-size: 16px; line-height: 1.55; color: #4A4A45">Marketplace listings never show your name, apartment or contact details. Enquiries stay in your private inbox.</p></div>
+<div style="border-top: 1px solid #0F3D32; padding-top: 24px; display: flex; flex-direction: column; gap: 10px"><h3 style="margin: 0; font-size: 18px; font-weight: 700; color: #0F3D32">A 24-hour backstop</h3><p style="margin: 0; font-size: 16px; line-height: 1.55; color: #4A4A45">Reports go to your building’s property team first. If nothing has happened within 24 hours, 2Gaff steps in.</p></div>
+<div style="border-top: 1px solid #0F3D32; padding-top: 24px; display: flex; flex-direction: column; gap: 10px"><h3 style="margin: 0; font-size: 18px; font-weight: 700; color: #0F3D32">No payments taken</h3><p style="margin: 0; font-size: 16px; line-height: 1.55; color: #4A4A45">Exchanges are arranged between verified residents. 2Gaff never handles money between neighbours.</p></div>
+</div>
+</section>
+
+<section id="joining" style="padding: 128px 72px; flex-shrink: 0; display: flex; flex-direction: column; gap: 72px">
+<div style="display: flex; justify-content: space-between; align-items: flex-end">
+<div style="display: flex; flex-direction: column; gap: 24px">
+<div style="display: flex; align-items: center; gap: 14px; font-size: 13px; font-weight: 600; letter-spacing: 2.4px; color: #7F5B34"><span style="width: 36px; height: 1px; background: #D4AF7C"></span>HOW JOINING WORKS</div>
+<h2 style="margin: 0; font-family: 'Fraunces', Georgia, serif; font-weight: 350; font-size: 56px; line-height: 1.05; letter-spacing: -1.4px; color: #0F3D32">From first hello to <em style="font-weight: 300">everyday helpful.</em></h2>
+</div>
+<a href="#" style="display: inline-flex; align-items: center; gap: 12px; height: 56px; padding: 0 30px; background: #0F3D32; color: #FAF7F2; border-radius: 999px; font-size: 16px; font-weight: 600; text-decoration: none">Get started<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a>
+</div>
+<div style="position: relative; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 56px">
+<span style="position: absolute; left: 0; right: 0; top: 28px; height: 1px; background: #D4AF7C"></span>
+<div style="position: relative; display: flex; flex-direction: column; gap: 14px"><span style="width: 56px; height: 56px; border-radius: 999px; background: #FAF7F2; border: 1px solid #D4AF7C; display: flex; align-items: center; justify-content: center; font-family: 'Fraunces', Georgia, serif; font-size: 24px; color: #0F3D32">1</span><h3 style="margin: 12px 0 0 0; font-family: 'Fraunces', Georgia, serif; font-weight: 400; font-size: 28px; color: #0F3D32">Receive your invitation</h3><p style="margin: 0; font-size: 16px; line-height: 1.55; color: #6D6458; max-width: 360px">Your property team shares a joining link, QR code or building code.</p></div>
+<div style="position: relative; display: flex; flex-direction: column; gap: 14px"><span style="width: 56px; height: 56px; border-radius: 999px; background: #FAF7F2; border: 1px solid #D4AF7C; display: flex; align-items: center; justify-content: center; font-family: 'Fraunces', Georgia, serif; font-size: 24px; color: #0F3D32">2</span><h3 style="margin: 12px 0 0 0; font-family: 'Fraunces', Georgia, serif; font-weight: 400; font-size: 28px; color: #0F3D32">Sign in securely</h3><p style="margin: 0; font-size: 16px; line-height: 1.55; color: #6D6458; max-width: 360px">Continue with email, Google or Apple. One personal account stays with you, even when you move.</p></div>
+<div style="position: relative; display: flex; flex-direction: column; gap: 14px"><span style="width: 56px; height: 56px; border-radius: 999px; background: #0F3D32; border: 1px solid #0F3D32; display: flex; align-items: center; justify-content: center; color: #D4AF7C"><svg width="22" height="22" viewBox="0 0 308 200" aria-hidden="true"><path fill="#FAF7F2" d="M57 193H8Q0 193 0 185V91Q0 85 5 81L99 3Q105 -1 111 4L191 69Q197 74 197 82V185Q197 193 189 193H138Q124 193 124 183Q123 172 131 157Q133 153 137 157L148 165H169V87L105 35L29 98V165H54Q57 165 57 168Z"></path><path fill="#D4AF7C" d="M251 193H300Q308 193 308 185V91Q308 85 303 81L212 4Q206 -1 200 4L123 67Q118 71 118 78V140Q118 148 126 152Q132 156 138 152Q146 148 146 140V86L206 35L279 98V165H252Q249 165 249 168V191Q249 193 251 193Z"></path></svg></span><h3 style="margin: 12px 0 0 0; font-family: 'Fraunces', Georgia, serif; font-weight: 400; font-size: 28px; color: #0F3D32">Step inside</h3><p style="margin: 0; font-size: 16px; line-height: 1.55; color: #6D6458; max-width: 360px">Once your residency is confirmed, your building’s notices, bookings and neighbours open up.</p></div>
+</div>
+</section>
+
+<section style="display: flex; height: 640px; background: #0F3D32; flex-shrink: 0">
+<div style="width: 720px; box-sizing: border-box; padding: 88px 72px; display: flex; flex-direction: column">
+<div style="display: flex; align-items: center; gap: 14px; font-size: 13px; font-weight: 600; letter-spacing: 2.4px; color: #D4AF7C"><span style="width: 36px; height: 1px; background: #D4AF7C"></span>READY WHEN YOU ARE</div>
+<h2 style="margin: 24px 0 0 0; font-family: 'Fraunces', Georgia, serif; font-weight: 300; font-size: 68px; line-height: 1.02; letter-spacing: -1.8px; color: #FAF7F2">A little closer <em>to home.</em></h2>
+<div style="display: flex; margin-top: 56px">
+<div style="width: 50%; padding-right: 36px; display: flex; flex-direction: column; gap: 16px"><span style="font-size: 15px; line-height: 1.5; color: #C9D3CE">New to 2Gaff? Join your building with the link from your property team.</span><a href="#" style="align-self: flex-start; display: inline-flex; align-items: center; gap: 10px; height: 52px; padding: 0 26px; background: #D4AF7C; color: #0F3D32; border-radius: 999px; font-size: 16px; font-weight: 700; text-decoration: none">Get started<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a></div>
+<div style="width: 50%; padding-left: 36px; border-left: 1px solid rgba(212,175,124,0.4); display: flex; flex-direction: column; gap: 16px"><span style="font-size: 15px; line-height: 1.5; color: #C9D3CE">Been here before? Pick up where you left off.</span><a href="#" style="align-self: flex-start; display: inline-flex; align-items: center; height: 52px; padding: 0 26px; border: 1.5px solid #FAF7F2; color: #FAF7F2; border-radius: 999px; font-size: 16px; font-weight: 600; text-decoration: none; box-sizing: border-box">Sign in</a></div>
+</div>
+<div style="display: flex; align-items: center; gap: 20px; margin-top: auto">
+<a href="#" aria-label="Get it on Google Play" style="display: flex"><img src="../images/google-play-badge.png" alt="Get it on Google Play" style="height: 56px; width: auto; display: block"></a>
+<span style="font-size: 14px; color: #C9D3CE">Download for Android, or use 2Gaff in your browser.</span>
+</div>
+</div>
+<img src="../images/everyday-neighbours.jpg" alt="A resident returning home with her dog, greeted by the concierge" style="width: 720px; height: 640px; object-fit: cover; object-position: 72% 50%; display: block">
+</section>
+
+<footer style="flex-grow: 1; padding: 72px 72px 48px 72px; display: flex; flex-direction: column; gap: 56px; box-sizing: border-box">
+<div style="display: flex; justify-content: space-between; align-items: flex-start">
+<div style="display: flex; flex-direction: column; gap: 16px">
+<a href="#" aria-label="2Gaff home" style="display: flex; align-items: center; gap: 10px; text-decoration: none">
+<svg width="46" height="30" viewBox="0 0 308 200" aria-hidden="true"><path fill="#0F3D32" d="M57 193H8Q0 193 0 185V91Q0 85 5 81L99 3Q105 -1 111 4L191 69Q197 74 197 82V185Q197 193 189 193H138Q124 193 124 183Q123 172 131 157Q133 153 137 157L148 165H169V87L105 35L29 98V165H54Q57 165 57 168Z"></path><path fill="#D4AF7C" d="M251 193H300Q308 193 308 185V91Q308 85 303 81L212 4Q206 -1 200 4L123 67Q118 71 118 78V140Q118 148 126 152Q132 156 138 152Q146 148 146 140V86L206 35L279 98V165H252Q249 165 249 168V191Q249 193 251 193Z"></path><rect x="61" y="111" width="15" height="15" rx="1" fill="#0F3D32"></rect><rect x="81" y="111" width="15" height="15" rx="1" fill="#0F3D32"></rect><rect x="61" y="131" width="15" height="15" rx="1" fill="#0F3D32"></rect><rect x="81" y="131" width="15" height="15" rx="1" fill="#0F3D32"></rect><rect x="216" y="111" width="15" height="15" rx="1" fill="#D4AF7C"></rect><rect x="236" y="111" width="15" height="15" rx="1" fill="#D4AF7C"></rect><rect x="216" y="131" width="15" height="15" rx="1" fill="#D4AF7C"></rect><rect x="236" y="131" width="15" height="15" rx="1" fill="#D4AF7C"></rect></svg>
+<span style="font-size: 28px; font-weight: 700; letter-spacing: -1.2px; color: #0F3D32">2Gaff</span>
+</a>
+<span style="font-size: 15px; color: #6D6458">Your property community, in one place.</span>
+</div>
+<div style="display: flex; gap: 88px; font-size: 15px">
+<div style="display: flex; flex-direction: column; gap: 12px"><span style="font-size: 12px; font-weight: 700; letter-spacing: 1.6px; color: #7F5B34">RESIDENTS</span><a href="#" style="text-decoration: none; color: #2D2D2D">Get started</a><a href="#" style="text-decoration: none; color: #2D2D2D">Sign in</a><a href="#" style="text-decoration: none; color: #2D2D2D">Everyday essentials</a></div>
+<div style="display: flex; flex-direction: column; gap: 12px"><span style="font-size: 12px; font-weight: 700; letter-spacing: 1.6px; color: #7F5B34">PROPERTY TEAMS</span><a href="#" style="text-decoration: none; color: #2D2D2D">Set up your building</a><a href="#" style="text-decoration: none; color: #2D2D2D">Team sign in</a></div>
+<div style="display: flex; flex-direction: column; gap: 12px"><span style="font-size: 12px; font-weight: 700; letter-spacing: 1.6px; color: #7F5B34">HELP</span><a href="#" style="text-decoration: none; color: #2D2D2D">Support</a><a href="#" style="text-decoration: none; color: #2D2D2D">Privacy</a><a href="#" style="text-decoration: none; color: #2D2D2D">Terms</a></div>
+<a href="#" aria-label="Get it on Google Play" style="display: flex; align-self: flex-start"><img src="../images/google-play-badge.png" alt="Get it on Google Play" style="height: 48px; width: auto; display: block"></a>
+</div>
+</div>
+<div style="display: flex; justify-content: space-between; padding-top: 24px; border-top: 1px solid #E0D5C4; font-size: 13px; color: #6D6458">
+<span>© 2026 2Gaff. Images show fictional residents and properties.</span>
+<span>Built by Deeray Multimedia Ltd</span>
+</div>
+</footer>
+
+</div>
+</body>
+</html>
