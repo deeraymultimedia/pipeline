@@ -1,6 +1,6 @@
 # 2Gaff website concept: "The Front Door"
 
-Visual mockup for a redesigned 2gaff.com homepage (desktop and mobile), plus a storyboard for the hero motion. **Mockup only.** Nothing here has been built into the live site yet: the build waits for approval of this direction.
+Visual mockup for a redesigned 2gaff.com homepage (desktop and mobile), with a filmed hero video and the earlier photo-motion storyboard. **Mockup only.** Nothing here has been built into the live site yet: the build waits for approval of this direction.
 
 Live canvas (private until shared): https://claude.ai/artifact/K7dGsV3GPRdpwz8h5BvVoh
 
@@ -10,8 +10,9 @@ Live canvas (private until shared): https://claude.ai/artifact/K7dGsV3GPRdpwz8h5
 |------|------------|
 | `preview/desktop.html` | Desktop homepage (1440 px), opens in any browser |
 | `preview/mobile.html` | Mobile homepage (390 px), opens in any browser |
-| `preview/motion.html` | Hero motion storyboard (three scenes, timings, accessibility) |
-| `canvas/` | Source files for the claude.ai Design canvas (`*.dc.html` + `canvas.json`) |
+| `preview/motion.html` | Earlier photo-motion storyboard, kept for reference (the hero now uses `video/`) |
+| `video/` | Hero video: `hero-day.webm` and `hero-day.mp4` (22.5 s, 1280×720, silent, about 3 MB each) and `hero-day-poster.jpg` |
+| `canvas/` | Source files for the claude.ai Design canvas (`*.dc.html` + `canvas.json`). Not updated for the video hero |
 | `images/` | 2Gaff photography and the official Google Play badge, taken from 2gaff.com |
 
 ## Brand tokens (from the 2gaff.com app source)
@@ -31,8 +32,10 @@ Type: Fraunces (display) and Figtree (body). The logo is the app's own SVG mark 
 
 ## Concept
 
-- The hero photo sits in a pitched-roof frame taken from the two-house logo, with an offset gold outline echoing the logo's gold house.
-- The hero motion is an 18-second loop of three photos: morning notices, afternoon events and evening bookings. Each has a slow push-in, a 1.2-second dissolve and a small in-app message that rises into view. Visitors who ask for reduced motion see a still first frame.
+- The hero is a wide 16:9 video in a pitched-roof frame taken from the two-house logo, with an offset gold outline echoing the logo's gold house. The headline and calls to action sit above it.
+- The video is one continuous camera move through a day at the building: a couple arrives at the front door and is welcomed at the concierge desk, neighbours meet in the residents' room, and friends relax on the rooftop at sunset. It loops seamlessly.
+- Four in-app messages follow the video: a property-team notice, a concierge message, a booking confirmation and a rooftop event. The scene labels and progress lines below the frame track the video's own time, so they stay in sync.
+- A pause button sits beside the scene labels. The video pauses when it scrolls out of view or the tab is hidden. Visitors who ask for reduced motion see the still poster frame and the first message, with no playback.
 - Features are shown as a numbered lobby-style directory beside a phone screen, not a grid of cards.
 - Sign in and Get started appear in the header, the hero and the closing section. The Google Play badge appears in the header, the hero, the closing section and the footer.
 
@@ -44,8 +47,15 @@ Figma's Claude connector is not available in cloud Claude Code sessions. Options
 2. **Use Claude Code locally** (desktop app or CLI) with the Figma connector or Figma's desktop MCP server enabled. Check out this branch and ask Claude to work from these files.
 3. **Use a claude.ai chat** with the Figma connector switched on to read Figma frames back and compare them with this mockup.
 
+## How the hero video was made
+
+- Stills: five scenes generated for 2Gaff (front entrance, concierge desk, meeting room, rooftop lounge, barbecue garden). The barbecue image was not used: Google Flow rejected it on upload, most likely because it shows a child.
+- The desk image was edited in Google Flow (Nano Banana 2) so the man matches the entrance image; the entrance image was cropped to 16:9.
+- Three 8-second transitions were generated in Google Flow with Veo 3.1 Fast, each using one still as its first frame and the next as its last: entrance → desk, desk → meeting room, meeting room → rooftop. Generated on the Google AI Pro plan's included credits.
+- The clips were joined with 0.25-second cross-fades, the audio removed, and the end cross-faded into the start so the loop has no visible jump.
+
 ## Open questions
 
-- Hero video source: none yet. The photo-based motion works without video. A real clip can replace it inside the same frame later.
+- The rooftop and meeting-room messages are sample content, like the rest of the copy in the phone screens.
 - Footer credit "Built by Deeray Multimedia Ltd": confirm it should appear.
 - "Alder Court", "Residents' lounge" and the dates in the phone screens are sample content.
